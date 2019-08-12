@@ -1,2 +1,8 @@
-.venv
-/idea/
+.idea
+secrets.py
+
+Pipfile
+Pipfile.lock
+
+.pytest_cache
+/instance/
