@@ -1,8 +1,9 @@
 from flask_user import UserManager, UserMixin
 from flaskr import app, db
+from flask_mongoengine import MongoEngine
 
 
-class Guest(db.document, UserMixin):
+class Guest(db.Document, UserMixin):
     active = db.BooleanField(default=True)
 
     # User authentication information

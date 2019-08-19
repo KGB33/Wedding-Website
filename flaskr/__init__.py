@@ -4,6 +4,10 @@ from flask_mongoengine import MongoEngine
 import os
 
 
+# Setup Flask-MongoEngine
+db = MongoEngine()
+
+
 def create_app(test_config=None):
     """ Flask application factory """
 
@@ -31,6 +35,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    db.init_app(app)
     return app
 
 
@@ -38,5 +43,4 @@ def create_app(test_config=None):
 app = create_app()
 
 
-# Setup Flask-MongoEngine
-db = MongoEngine(app)
+
