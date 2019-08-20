@@ -1,11 +1,7 @@
 from flask import Flask
 from flaskr.secrets import DB_HOST, DB_NAME, FLASK_SECRET_KEY
-from flask_mongoengine import MongoEngine
+from flaskr.extensions import mongo, lm
 import os
-
-
-# Setup Flask-MongoEngine
-db = MongoEngine()
 
 
 def create_app(test_config=None):
@@ -15,10 +11,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY=FLASK_SECRET_KEY,
-        MONGODB_SETTINGS={
-            'db': DB_NAME,
-            'host': DB_HOST
-        },
+        MONGO_URI=DB_HOST,
         USER_APP_NAME="Wedding-Website",  # Shown in and email templates and page footers
         USER_ENABLE_EMAIL=False,  # Disable email authentication
         USER_ENABLE_USERNAME=True,  # Enable username authentication
@@ -35,8 +28,25 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    db.init_app(app)
+    @app.route('/test')
+    def test():
+        return 'This is the test Page'
+
+    # Register Blueprints
+    register_blueprints(app)
+
+    # init Extensions
+    mongo.init_app(app)
+    lm.init_app(app)
+
     return app
+
+
+def register_blueprints(app):
+    # Register Blueprints
+    from . import main, auth
+    app.register_blueprint(main.bp)
+    app.register_blueprint(auth.bp)
 
 
 # Create app
