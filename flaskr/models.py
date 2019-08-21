@@ -15,16 +15,25 @@ class Guest(UserMixin):
     party: list = None
 
     def __post_init__(self):
-        # Sets password hash on creation
-        self._password = generate_password_hash(self._password)
+        # Sets password hash on user registration
+        if 'pbkdf2:sha256:' not in self._password:
+            self._password = generate_password_hash(self._password)
 
     @property
     def password(self):
         return self._password
 
     @password.setter
-    def password(self, password):
-        self._password = generate_password_hash(password)
+    def password(self, val):
+        self._password = generate_password_hash(val)
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, val):
+        self._id = val
 
     def check_password(self, password):
         return check_password_hash(self._password, password)
