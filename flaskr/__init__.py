@@ -1,6 +1,6 @@
 from flask import Flask
 from flaskr.secrets import DB_HOST, DB_NAME, FLASK_SECRET_KEY
-from flaskr.extensions import mongo, lm
+from flaskr.extensions import mongo, login_manager
 import os
 
 
@@ -37,16 +37,27 @@ def create_app(test_config=None):
 
     # init Extensions
     mongo.init_app(app)
-    lm.init_app(app)
+
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
+
+    @login_manager.user_loader
+    def load_user(_id):
+        from flaskr.models import Guest
+        try:
+            return Guest(**mongo.db.guests.find_one({'_id': _id}))
+        except TypeError:
+            return None
 
     return app
 
 
 def register_blueprints(app):
     # Register Blueprints
-    from . import main, auth
+    from . import main, auth, profile
     app.register_blueprint(main.bp)
     app.register_blueprint(auth.bp)
+    app.register_blueprint(profile.bp)
 
 
 # Create app
