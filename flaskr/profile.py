@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask_login import login_required
+from flask_login import login_required, fresh_login_required
 
 bp = Blueprint('profile', __name__, url_prefix='/profile')
 
@@ -14,7 +14,7 @@ def view():
 
 
 @bp.route('/edit')
-@login_required
+@fresh_login_required
 def edit():
     """
     Route for editing profile info
