@@ -1,7 +1,11 @@
+from functools import wraps
+
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 
+from flaskr import login_manager
+from flaskr.Exceptions import NoRolesProvided
 from flaskr.extensions import mongo
 from flaskr.forms import LoginForm, RegistrationForm
 from flaskr.models import Guest
@@ -56,3 +60,42 @@ def register():
         flash("Congratulations, you are now a registered user!")
         return redirect(url_for("auth.login"))
     return render_template("register.html", title="Register", form=form)
+
+
+@bp.route("/unauthorized_role")
+def unauthorized_role():
+    return "You are seeing this page because you lack the required roles to view your requested page."
+
+
+def requires_roles(*roles):
+    """
+    Implements role biased authentication over Flask-login
+
+    :param roles: Required Roles for authentication
+    """
+
+    def wrapper(func):
+        @wraps(func)
+        def decorated_view(*args, **kwargs):
+
+            if roles is None:
+                raise NoRolesProvided(
+                    "No Roles provided, Please use @login_required instead"
+                )
+
+            if current_user is None:
+                return login_manager.unathorized()
+
+            if current_user.roles is None:
+                print(f"{current_user} does not have any roles.")
+                return redirect(url_for("auth.unauthorized_role"))
+
+            for role in roles:
+                if role not in current_user.roles:
+                    print(f"{current_user} does not have required role {role}.")
+                    return redirect(url_for("auth.unauthorized_role"))
+            return func(*args, **kwargs)
+
+        return decorated_view
+
+    return wrapper
