@@ -1,0 +1,11 @@
+{% extends "admin/dashboard.html" %}
+
+{% block content %}
+    <h1>Guests:</h1>
+    {% for guest in guests %}
+
+    <div><ul> {{ guest }} </ul></div>
+
+    {% endfor %}
+
+{% endblock %}
