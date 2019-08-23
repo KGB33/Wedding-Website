@@ -4,6 +4,8 @@ from flask_login import UserMixin
 from flask_pymongo import ObjectId
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from WeddingWebsite.extensions import mongo
+
 
 @dataclass
 class Guest(UserMixin):
@@ -54,3 +56,41 @@ class Guest(UserMixin):
                 "party": self.party,
             }
         )
+
+    def update_db(self, db):
+        db.guests.update_one(
+            {"_id": self.id},
+            {
+                "$set": {
+                    "username": self.username,
+                    "_password": self._password,
+                    "name": self.name,
+                    "email": self.email,
+                    "roles": self.roles,
+                    "party": self.party,
+                }
+            },
+        )
+
+
+class GuestCollection:
+    def __init__(self):
+        self.guests = [Guest(**x) for x in mongo.db.guests.find({})]
+
+    def get_guest_by_id(self, id):
+        for guest in self.guests:
+            if guest.id == ObjectId(id):
+                return guest
+        return None
+
+    def __len__(self):
+        return len(self.guests)
+
+    def __getitem__(self, index):
+        return self.guests[index]
+
+    def __str__(self):
+        result = "Guests in collection:"
+        for guest in self.guests:
+            result += f"\n\t{guest}"
+        return result
