@@ -24,7 +24,7 @@ def login():
 
         next_url = request.args.get("next")
         if not next_url or url_parse(next_url).netloc != "":
-            next_url = url_for("main.index")
+            next_url = url_for("views.index")
         return redirect(next_url)
     return render_template("login.html", form=form)
 
@@ -37,7 +37,7 @@ def logout():
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for("index"))
+        return redirect(url_for("views.index"))
     form = RegistrationForm()
     if form.validate_on_submit():
         guest = Guest(

@@ -58,11 +58,10 @@ def create_app(test_config=None):
 
 def register_blueprints(app):
     # Register Blueprints
-    from . import main, auth, profile
+    from . import views, auth
 
-    app.register_blueprint(main.bp)
+    app.register_blueprint(views.views)
     app.register_blueprint(auth.bp)
-    app.register_blueprint(profile.bp)
 
 
 # Create app
