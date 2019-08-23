@@ -1,9 +1,11 @@
-from flask import Blueprint, request, flash, redirect, url_for, render_template
-from flask_login import login_user, current_user
-from flaskr.forms import LoginForm, RegistrationForm
-from flaskr.extensions import mongo
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask_login import current_user, login_user
 from werkzeug.urls import url_parse
+
+from flaskr.extensions import mongo
+from flaskr.forms import LoginForm, RegistrationForm
 from flaskr.models import Guest
+
 
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
@@ -25,7 +27,6 @@ def login():
         if not next_url or url_parse(next_url).netloc != '':
             next_url = url_for('main.index')
         return redirect(next_url)
-
     return render_template('login.html', form=form)
 
 
