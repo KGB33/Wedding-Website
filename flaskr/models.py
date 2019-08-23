@@ -39,7 +39,7 @@ class Guest(UserMixin):
         return check_password_hash(self._password, password)
 
     def __str__(self):
-        return f'{self.name} has roles: {self.roles} and is in party: {self.party}'
+        return f'User {self.username}, with id: {self.id}'
 
     def add_to_mongodb(self, db):
         guests = db.guests
