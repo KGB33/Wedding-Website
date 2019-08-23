@@ -11,10 +11,10 @@ from WeddingWebsite.forms import LoginForm, RegistrationForm
 from WeddingWebsite.models import Guest
 
 
-bp = Blueprint("auth", __name__, url_prefix="/auth")
+auth = Blueprint("auth", __name__, url_prefix="/auth")
 
 
-@bp.route("/login", methods=["GET", "POST"])
+@auth.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -33,7 +33,7 @@ def login():
     return render_template("login.html", form=form)
 
 
-@bp.route("/logout")
+@auth.route("/logout")
 def logout():
     if current_user is not None:
         logout_user()
@@ -43,7 +43,7 @@ def logout():
     return redirect(url_for("views.index"))
 
 
-@bp.route("/register", methods=["GET", "POST"])
+@auth.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for("views.index"))
@@ -62,7 +62,7 @@ def register():
     return render_template("register.html", title="Register", form=form)
 
 
-@bp.route("/unauthorized_role")
+@auth.route("/unauthorized_role")
 def unauthorized_role():
     return "You are seeing this page because you lack the required roles to view your requested page."
 
