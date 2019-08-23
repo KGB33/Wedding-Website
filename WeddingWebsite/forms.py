@@ -31,3 +31,22 @@ class RegistrationForm(FlaskForm):
         user = mongo.db.guests.find_one({"email": email.data})
         if user is not None:
             raise ValidationError("Please use a different email address.")
+
+
+class EditForm(FlaskForm):
+    name = StringField("Name")
+    username = StringField("Username")
+    password = PasswordField("Password")
+    password2 = PasswordField("Repeat Password", validators=[EqualTo("password")])
+    email = StringField("Email")
+    submit = SubmitField("Update Info")
+
+    def validate_username(self, username):
+        user = mongo.db.guests.find_one({"username": username.data})
+        if user is not None:
+            raise ValidationError("Please use a different username.")
+
+    def validate_email(self, email):
+        user = mongo.db.guests.find_one({"email": email.data})
+        if user is not None:
+            raise ValidationError("Please use a different email address.")
