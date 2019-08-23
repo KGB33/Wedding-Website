@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 
 from flaskr.extensions import mongo
@@ -31,7 +31,12 @@ def login():
 
 @bp.route("/logout")
 def logout():
-    return "This is the Logout Page"
+    if current_user is not None:
+        logout_user()
+        flash("You have been logged out.")
+    else:
+        flash("You are not logged in.")
+    return redirect(url_for("views.index"))
 
 
 @bp.route("/register", methods=["GET", "POST"])
