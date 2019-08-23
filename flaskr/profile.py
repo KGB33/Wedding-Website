@@ -1,23 +1,23 @@
 from flask import Blueprint
-from flask_login import login_required, fresh_login_required
-
-bp = Blueprint('profile', __name__, url_prefix='/profile')
+from flask_login import fresh_login_required, login_required
 
 
-@bp.route('/view')
+bp = Blueprint("profile", __name__, url_prefix="/profile")
+
+
+@bp.route("/view")
 @login_required
 def view():
     """
     Route for viewing profile info
     """
-    return 'This is the profile view'
+    return "This is the profile view"
 
 
-@bp.route('/edit')
+@bp.route("/edit")
 @fresh_login_required
 def edit():
     """
     Route for editing profile info
     """
-    return 'This is the edit profile view'
-
+    return "This is the edit profile view"

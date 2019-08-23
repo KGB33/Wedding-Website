@@ -1,7 +1,8 @@
-from flask_login import UserMixin
-from werkzeug.security import check_password_hash, generate_password_hash
-from flask_pymongo import ObjectId
 from dataclasses import dataclass
+
+from flask_login import UserMixin
+from flask_pymongo import ObjectId
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 @dataclass
@@ -16,7 +17,7 @@ class Guest(UserMixin):
 
     def __post_init__(self):
         # Sets password hash on user registration
-        if 'pbkdf2:sha256:' not in self._password:
+        if "pbkdf2:sha256:" not in self._password:
             self._password = generate_password_hash(self._password)
 
     @property
@@ -39,17 +40,17 @@ class Guest(UserMixin):
         return check_password_hash(self._password, password)
 
     def __str__(self):
-        return f'User {self.username}, with id: {self.id}'
+        return f"User {self.username}, with id: {self.id}"
 
     def add_to_mongodb(self, db):
         guests = db.guests
-        guests.insert_one({
-            'username': self.username,
-            '_password': self._password,
-            'name': self.name,
-            'email': self.email,
-            'roles': self.roles,
-            'party': self.party,
-        })
-
-
+        guests.insert_one(
+            {
+                "username": self.username,
+                "_password": self._password,
+                "name": self.name,
+                "email": self.email,
+                "roles": self.roles,
+                "party": self.party,
+            }
+        )

@@ -6,7 +6,6 @@ from flaskr.extensions import login_manager, mongo
 from flaskr.secrets import DB_HOST, DB_NAME, FLASK_SECRET_KEY
 
 
-
 def create_app(test_config=None):
     """ Flask application factory """
 
@@ -22,7 +21,7 @@ def create_app(test_config=None):
     )
 
     if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
+        app.config.from_pyfile("config.py", silent=True)
     else:
         app.config.from_mapping(test_config)
 
@@ -31,16 +30,16 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route('/test')
+    @app.route("/test")
     def test():
-        return 'This is the test Page'
+        return "This is the test Page"
 
     # Register Blueprints
     register_blueprints(app)
 
     # init Extensions
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = "auth.login"
 
     mongo.init_app(app)
 
@@ -48,7 +47,8 @@ def create_app(test_config=None):
     def load_user(user_id):
         from flaskr.models import Guest
         from flask_pymongo import ObjectId
-        guest = mongo.db.guests.find_one({'_id': ObjectId(user_id)})
+
+        guest = mongo.db.guests.find_one({"_id": ObjectId(user_id)})
         if guest is None:
             return None
         return Guest(**guest)
@@ -59,6 +59,7 @@ def create_app(test_config=None):
 def register_blueprints(app):
     # Register Blueprints
     from . import main, auth, profile
+
     app.register_blueprint(main.bp)
     app.register_blueprint(auth.bp)
     app.register_blueprint(profile.bp)
@@ -66,6 +67,3 @@ def register_blueprints(app):
 
 # Create app
 app = create_app()
-
-
-

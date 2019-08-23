@@ -1,14 +1,14 @@
 from flask import Blueprint, render_template
 
 
-bp = Blueprint('main', __name__, url_prefix='')
+bp = Blueprint("main", __name__, url_prefix="")
 
 
-@bp.route('/')
+@bp.route("/")
 def index():
-    return render_template('index.html')
+    return render_template("index.html")
 
 
-@bp.route('/member')
+@bp.route("/member")
 def member_page():
-    return 'This is the members only page'
+    return "This is the members only page"
