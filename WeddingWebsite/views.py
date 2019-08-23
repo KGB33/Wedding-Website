@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 from flask_login import fresh_login_required, login_required
 
-from flaskr.auth import requires_roles
+from WeddingWebsite.auth import requires_roles
 
 
 views = Blueprint("views", __name__, url_prefix="")

@@ -1,6 +1,6 @@
 from werkzeug.security import check_password_hash
 
-from flaskr.models import Guest
+from WeddingWebsite.models import Guest
 
 
 """

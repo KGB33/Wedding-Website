@@ -4,11 +4,11 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse
 
-from flaskr import login_manager
-from flaskr.Exceptions import NoRolesProvided
-from flaskr.extensions import mongo
-from flaskr.forms import LoginForm, RegistrationForm
-from flaskr.models import Guest
+from WeddingWebsite import login_manager
+from WeddingWebsite.exceptions import NoRolesProvided
+from WeddingWebsite.extensions import mongo
+from WeddingWebsite.forms import LoginForm, RegistrationForm
+from WeddingWebsite.models import Guest
 
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")

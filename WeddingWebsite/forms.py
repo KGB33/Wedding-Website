@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import BooleanField, PasswordField, StringField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
-from flaskr import mongo
+from WeddingWebsite import mongo
 
 
 class LoginForm(FlaskForm):

@@ -2,8 +2,8 @@ import os
 
 from flask import Flask
 
-from flaskr.extensions import login_manager, mongo
-from flaskr.secrets import DB_HOST, DB_NAME, FLASK_SECRET_KEY
+from WeddingWebsite.extensions import login_manager, mongo
+from WeddingWebsite.secrets import DB_HOST, DB_NAME, FLASK_SECRET_KEY
 
 
 def create_app(test_config=None):
@@ -45,7 +45,7 @@ def create_app(test_config=None):
 
     @login_manager.user_loader
     def load_user(user_id):
-        from flaskr.models import Guest
+        from WeddingWebsite.models import Guest
         from flask_pymongo import ObjectId
 
         guest = mongo.db.guests.find_one({"_id": ObjectId(user_id)})
