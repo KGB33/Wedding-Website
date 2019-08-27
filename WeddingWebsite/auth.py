@@ -18,7 +18,10 @@ auth = Blueprint("auth", __name__, url_prefix="/auth")
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        guest = Guest(**mongo.db.guests.find_one({"username": form.username.data}))
+        try:
+            guest = Guest(**mongo.db.guests.find_one({"username": form.username.data}))
+        except TypeError:
+            guest = None
         if guest is None or not guest.check_password(form.password.data):
             flash("Invalid username or password")
             return redirect(url_for("auth.login"))
