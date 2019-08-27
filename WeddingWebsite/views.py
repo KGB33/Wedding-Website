@@ -1,7 +1,5 @@
 from flask import Blueprint, render_template
-from flask_login import fresh_login_required, login_required
-
-from WeddingWebsite.auth import requires_roles
+from flask_login import current_user, fresh_login_required, login_required
 
 
 views = Blueprint("views", __name__, url_prefix="")
@@ -23,7 +21,7 @@ def view_profile():
     """
     Route for viewing profile info
     """
-    return "This is the profile view"
+    return render_template("admin/guest.html", guest=current_user)
 
 
 @views.route("/edit_profile")
@@ -33,9 +31,3 @@ def edit_profile():
     Route for editing profile info
     """
     return "This is the edit profile view"
-
-
-@views.route("/test_required_roles")
-@requires_roles("test_role")
-def test_required_roles():
-    return "Congrats, you have the required roles"
