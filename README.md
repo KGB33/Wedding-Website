@@ -1,2 +1,2 @@
 # Wedding-Website
-A Wedding website written in Flask
+A website for my wedding using Flask
