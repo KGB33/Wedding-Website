@@ -49,6 +49,7 @@ def logout():
 @auth.route("/register", methods=["GET", "POST"])
 def register():
     if current_user.is_authenticated:
+        flash("You are already logged in! No need to register.")
         return redirect(url_for("views.index"))
     form = RegistrationForm()
     if form.validate_on_submit():
