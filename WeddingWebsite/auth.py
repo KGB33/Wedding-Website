@@ -16,6 +16,9 @@ auth = Blueprint("auth", __name__, url_prefix="/auth")
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
+    if current_user.is_authenticated:
+        flash("You are already logged in!")
+        return redirect(url_for("views.index"))
     form = LoginForm()
     if form.validate_on_submit():
         try:
