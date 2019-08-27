@@ -1,68 +1,40 @@
 from werkzeug.security import check_password_hash
 
-from WeddingWebsite.models import Guest
-
-
 """
-Tests for the User Model
+Tests for the Guest Model
 """
 
-# Tools
 
-# Used to instance an Guest object
-g_dict = {
-    "_id": 0,
-    "username": "username",
-    "_password": "password",
-    "name": "name",
-    "email": "email",
-    "roles": ["roles"],
-    "party": ["Parties"],
-}
-
-
-def test_init_guest_from_vals():
-    g = Guest(0, "username", "password", "name", "email", ["roles"], ["Parties"])
-    assert g._id == 0
-    assert g.username == "username"
-    assert check_password_hash(g._password, "password")
-    assert g.name == "name"
-    assert g.email == "email"
-    assert g.roles == ["roles"]
-    assert g.party == ["Parties"]
+def test_init_guest(new_guest):
+    """
+    GIVEN a Guest Model
+    WHEN a new Guest is created
+    THEN check the id, username, password, name, email, roles and, party
+    """
+    assert new_guest.id == 0
+    assert new_guest.username == "username"
+    assert check_password_hash(new_guest.password, "password")
+    assert new_guest.name == "name"
+    assert new_guest.email == "email"
+    assert new_guest.roles == ["roles"]
+    assert new_guest.party == ["Parties"]
 
 
-def test_init_guest_from_dict():
-    g = Guest(**g_dict)
-    assert g._id == 0
-    assert g.username == "username"
-    assert check_password_hash(g._password, "password")
-    assert g.name == "name"
-    assert g.email == "email"
-    assert g.roles == ["roles"]
-    assert g.party == ["Parties"]
+def test_guest_check_password_change(new_guest):
+    """
+    GIVEN a Guest model
+    WHEN the password is changed
+    THEN check that the password was hashed correctly
+    """
+    new_guest.password = "The new Password"
+    assert new_guest.check_password("The new Password")
+    assert new_guest.password != "The New Password"  # Not in plan text
+    assert not new_guest.check_password("Not The Password")
 
 
-def test_guest_password_property():
-    g = Guest(**g_dict)
-    assert check_password_hash(g._password, "password")
-    assert check_password_hash(g.password, "password")
-    g.password = "new_password"
-    assert check_password_hash(g._password, "new_password")
-    assert check_password_hash(g.password, "new_password")
-
-
-def test_guest_id_property():
-    g = Guest(**g_dict)
-    assert g._id == g.id
-
-
-def test_guest_check_password():
-    g = Guest(**g_dict)
-    assert g.check_password("password")
-    assert not g.check_password("Not The Password")
-
-
-def test_guest__str__():
-    g = Guest(**g_dict)
-    assert f"User {g.username}, with id: {g.id}" == g.__str__()
+def test_guest__str__(new_guest):
+    """
+    GIVEN a Guest model
+    CHECK That the __str__ method acts as intended
+    """
+    assert f"User {new_guest.username}, with id: {new_guest.id}" == new_guest.__str__()
