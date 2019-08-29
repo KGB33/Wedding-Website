@@ -1,6 +1,7 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, fresh_login_required, login_required
 
+from WeddingWebsite.auth import requires_roles, roles_cannot_access
 from WeddingWebsite.extensions import mongo
 from WeddingWebsite.forms import EditForm
 from WeddingWebsite.models import GuestCollection
@@ -20,6 +21,48 @@ def index():
 @login_required
 def home():
     return render_template("home.html")
+
+
+@views.route("/rsvp")
+@login_required
+def rsvp():
+    return "RSVP Page"
+
+
+@views.route("/dress_code")
+@login_required
+def dress_code():
+    return "This is the dress code page"
+
+
+@views.route("/registry")
+@login_required
+def registry():
+    return "This is the registry page"
+
+
+@views.route("/location")
+@login_required
+def location():
+    return "This is the location page"
+
+
+@views.route("/location/cabin")
+@requires_roles("cabin_stayer")
+def location_cabin():
+    return "You are staying in the cabin"
+
+
+@views.route("/location/hotel")
+@roles_cannot_access("cabin_stayer")
+def location_hotel():
+    return "You will be staying in a hotel."
+
+
+@views.route("/photos")
+@login_required
+def photos():
+    return "This will be the photo place"
 
 
 @views.route("/view_profile")

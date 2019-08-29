@@ -52,7 +52,7 @@ body {
 
 /* Main column */
 .right {
-  flex: 100%;
+  flex: 50%;
   background-color: white;
   padding: 20px;
 }
