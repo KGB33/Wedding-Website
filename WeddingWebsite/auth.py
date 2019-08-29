@@ -106,3 +106,37 @@ def requires_roles(*roles):
         return decorated_view
 
     return wrapper
+
+
+def roles_cannot_access(*roles):
+    """
+    Implements role biased authentication over Flask-login
+
+    Users with the provided roles CANNOT access the route.
+
+    :param roles: Required Roles for authentication
+    """
+
+    def wrapper(func):
+        @wraps(func)
+        def decorated_view(*args, **kwargs):
+
+            if roles is None:
+                raise NoRolesProvided(
+                    "No Roles provided, Please use @login_required instead"
+                )
+
+            if current_user is None:
+                return login_manager.unathorized()
+
+            if current_user.roles is None:
+                return func(*args, **kwargs)
+
+            for role in roles:
+                if role in current_user.roles:
+                    return redirect(url_for("auth.unauthorized_role"))
+            return func(*args, **kwargs)
+
+        return decorated_view
+
+    return wrapper
