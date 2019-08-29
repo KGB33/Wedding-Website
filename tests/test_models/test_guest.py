@@ -12,10 +12,10 @@ def test_init_guest(new_guest):
     THEN check the id, username, password, name, email, roles and, party
     """
     assert new_guest.id == 0
-    assert new_guest.username == "username"
+    assert new_guest.username == "username_new"
     assert check_password_hash(new_guest.password, "password")
     assert new_guest.name == "name"
-    assert new_guest.email == "email@email.com"
+    assert new_guest.email == "email_new@email.com"
     assert new_guest.roles == ["roles"]
     assert new_guest.party == ["Parties"]
 

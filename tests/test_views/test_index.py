@@ -22,7 +22,7 @@ def test_index_logged_in(test_client, new_guest, mongo_db):
         data={"username": "username", "password": "password"},
         follow_redirects=True,
     )
-    response = test_client.get("/")
+    response = test_client.get("/", follow_redirects=True)
     assert response.status_code == 200
-    assert b"Home Page" in response.data
-    assert b"Hi username!" in response.data
+    assert b"<!-- Home.html -->" in response.data
+    assert b'<link href="static/base.css"' in response.data

@@ -14,8 +14,9 @@ def test_valid_login(test_client, new_guest, mongo_db):
         follow_redirects=True,
     )
     assert response.status_code == 200
-    assert b"Home Page" in response.data
-    assert b"Hi username!" in response.data
+    assert b"Logged in name successfully" in response.data
+    assert b"<!-- Home.html -->" in response.data
+    assert b'<link href="static/base.css"' in response.data
 
 
 def test_invalid_login(test_client, new_guest, mongo_db):
@@ -42,9 +43,9 @@ def test_login_when_user_is_authenticated(new_guest, test_client, mongo_db):
     THEN check that the user is redirected to '/' and a message is flashed
     """
     new_guest.add_to_mongodb(mongo_db)
-    log_in("username", "password", test_client)
+    log_in(test_client)
     response = test_client.post("/auth/login", follow_redirects=True)
     assert response.status_code == 200
-    assert b"Home Page" in response.data
-    assert b"Hi username!" in response.data
+    assert b"<!-- Home.html -->" in response.data
+    assert b'<link href="static/base.css"' in response.data
     assert b"You are already logged in!" in response.data
