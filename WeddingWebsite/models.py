@@ -46,7 +46,7 @@ class Guest(UserMixin):
 
     def add_to_mongodb(self, db):
         guests = db.guests
-        guests.insert_one(
+        result = guests.insert_one(
             {
                 "username": self.username,
                 "_password": self._password,
@@ -56,9 +56,11 @@ class Guest(UserMixin):
                 "party": self.party,
             }
         )
+        self.id = result.inserted_id
+        return result
 
     def update_db(self, db):
-        db.guests.update_one(
+        result = db.guests.update_one(
             {"_id": self.id},
             {
                 "$set": {
@@ -71,6 +73,9 @@ class Guest(UserMixin):
                 }
             },
         )
+        if result.modified_count != 1:
+            return False
+        return True
 
 
 class GuestCollection:

@@ -44,7 +44,10 @@ def registry():
 @views.route("/location")
 @login_required
 def location():
-    return "This is the location page"
+    if "cabin_stayer" in current_user.roles:
+        return redirect(url_for("views.location_cabin"))
+    else:
+        return redirect(url_for("views.location_hotel"))
 
 
 @views.route("/location/cabin")

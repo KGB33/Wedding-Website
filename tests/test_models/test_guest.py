@@ -1,5 +1,8 @@
 from werkzeug.security import check_password_hash
 
+from WeddingWebsite.models import Guest
+
+
 """
 Tests for the Guest Model
 """
@@ -38,3 +41,30 @@ def test_guest__str__(new_guest):
     CHECK That the __str__ method acts as intended
     """
     assert f"User {new_guest.username}, with id: {new_guest.id}" == new_guest.__str__()
+
+
+def test_update_db(mongo_db, new_guest):
+    """
+    GIVEN a guest, guest, in a database
+    WHEN guest.update_db(db) is called
+    THEN check that the guest is updated correctly
+    """
+    _id = new_guest.add_to_mongodb(mongo_db).inserted_id
+    new_guest.username = "A new Username!!"
+    new_guest.name = "A new Name!!"
+    new_guest.update_db(mongo_db)
+    guest_from_db = Guest(**mongo_db.guests.find_one({"_id": _id}))
+    assert new_guest.username == guest_from_db.username
+    assert new_guest.name == guest_from_db.name
+
+
+def test_update_db_guest_not_in(mongo_db, new_guest):
+    """
+    GIVEN a database and a guest NOT in the database
+    WHEN the guest updates the database
+    THEN check that the database is not updated
+    """
+    new_guest.username = "A new Username!!"
+    new_guest.name = "A new Name!!"
+    assert not new_guest.update_db(mongo_db)
+    assert mongo_db.guests.find_one({"username": "A new Username!!"}) is None

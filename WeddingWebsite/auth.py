@@ -41,11 +41,11 @@ def login():
 
 @auth.route("/logout")
 def logout():
-    if current_user is not None:
+    if current_user.is_authenticated:
         logout_user()
         flash("You have been logged out.")
     else:
-        flash("You are not logged in.")
+        flash("You were not, and still are not, logged in.")
     return redirect(url_for("views.index"))
 
 
@@ -85,16 +85,15 @@ def requires_roles(*roles):
         @wraps(func)
         def decorated_view(*args, **kwargs):
 
-            if roles is None:
+            if not roles:
                 raise NoRolesProvided(
                     "No Roles provided, Please use @login_required instead"
                 )
 
-            if current_user is None:
-                return login_manager.unathorized()
+            if not current_user.is_authenticated:
+                return login_manager.unauthorized()
 
             if current_user.roles is None:
-                print(f"{current_user} does not have any roles.")
                 return redirect(url_for("auth.unauthorized_role"))
 
             for role in roles:
@@ -121,13 +120,13 @@ def roles_cannot_access(*roles):
         @wraps(func)
         def decorated_view(*args, **kwargs):
 
-            if roles is None:
+            if not roles:
                 raise NoRolesProvided(
                     "No Roles provided, Please use @login_required instead"
                 )
 
-            if current_user is None:
-                return login_manager.unathorized()
+            if not current_user.is_authenticated:
+                return login_manager.unauthorized()
 
             if current_user.roles is None:
                 return func(*args, **kwargs)
