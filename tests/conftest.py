@@ -89,7 +89,7 @@ def mongo_db():
 
     yield mongo.db
 
-    mongo.db.drop_collection("guests")
+    mongo.db.guests.drop()
 
 
 def log_in(app, username="t_default", password="123456"):
