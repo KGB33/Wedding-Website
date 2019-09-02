@@ -19,7 +19,7 @@ def test_init(mongo_db):
     THEN check that GuestCollection.guests contains all guests
     """
     gc = GuestCollection()
-    assert len(gc) == 1
+    assert len(gc) == 4
 
 
 def test_is_iterable(mongo_db):
@@ -43,4 +43,4 @@ def test_str(mongo_db):
     CHECK that the __str__ method acts as intended
     """
     gc = GuestCollection()
-    assert "Guests in collection:\n\tUser username, with id: " in str(gc)
+    assert "Guests in collection:\n\tUser t_default, with id: " in str(gc)

@@ -1,3 +1,6 @@
+from tests.conftest import log_in
+
+
 def test_index(test_client):
     """
     GIVEN a Flask Application
@@ -10,18 +13,13 @@ def test_index(test_client):
     assert b"Hi !" in response.data
 
 
-def test_index_logged_in(test_client, new_guest, mongo_db):
+def test_index_logged_in(test_client):
     """
     GIVEN a Flask App
     WHEN the '/' page is requested, and a user is logged in
     THEN check that the response is personalized
     """
-    new_guest.add_to_mongodb(mongo_db)
-    test_client.post(
-        "/auth/login",
-        data={"username": "username", "password": "password"},
-        follow_redirects=True,
-    )
+    assert log_in(test_client)
     response = test_client.get("/", follow_redirects=True)
     assert response.status_code == 200
     assert b"<!-- Home.html -->" in response.data

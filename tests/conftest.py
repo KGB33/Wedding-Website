@@ -6,15 +6,15 @@ from WeddingWebsite.models import Guest
 
 
 @pytest.fixture
-def new_guest():
+def template_user():
     g_dict = {
         "_id": 0,
-        "username": "username_new",
-        "_password": "password",
-        "name": "name",
-        "email": "email_new@email.com",
-        "roles": ["roles"],
-        "party": ["Parties"],
+        "username": "t_template_user",
+        "_password": "123456",
+        "name": "t_template_user",
+        "email": "t_template_user@test.org",
+        "roles": None,
+        "party": None,
     }
     return Guest(**g_dict)
 
@@ -44,27 +44,55 @@ def test_client():
     ctx.pop()
 
 
-@pytest.fixture
+@pytest.fixture(autouse=True)
 def mongo_db():
     from WeddingWebsite.extensions import mongo
 
-    g_dict = {
-        "_id": 0,
-        "username": "username",
-        "_password": "password",
-        "name": "name",
-        "email": "email@email.com",
-        "roles": ["roles"],
-        "party": ["Parties"],
-    }
-    Guest(**g_dict).add_to_mongodb(mongo.db)
+    # Add Default boring Guest
+    Guest(
+        _id=None,
+        username="t_default",
+        _password="123456",
+        name="t_default",
+        email="td@test.org",
+    ).add_to_mongodb(mongo.db)
+
+    # Add Groomsman Tester
+    Guest(
+        _id=None,
+        username="t_groomsman",
+        _password="123456",
+        name="t_groomsman",
+        email="tg@test.org",
+        roles=["groomsman"],
+    ).add_to_mongodb(mongo.db)
+
+    # Add Bridesmaid Tester
+    Guest(
+        _id=None,
+        username="t_bridesmaid",
+        _password="123456",
+        name="t_bridesmaid",
+        email="tb@test.org",
+        roles=["bridesmaid"],
+    ).add_to_mongodb(mongo.db)
+
+    # Add Wedding Party Tester
+    Guest(
+        _id=None,
+        username="t_wedding_party",
+        _password="123456",
+        name="t_wedding_party",
+        email="twp@test.org",
+        roles=["wedding_party"],
+    ).add_to_mongodb(mongo.db)
 
     yield mongo.db
 
     mongo.db.drop_collection("guests")
 
 
-def log_in(app, username="username", password="password"):
+def log_in(app, username="t_default", password="123456"):
     response = app.post(
         "/auth/login",
         data={"username": username, "password": password},
