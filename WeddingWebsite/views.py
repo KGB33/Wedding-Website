@@ -1,7 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, fresh_login_required, login_required
 
-from WeddingWebsite.auth import requires_roles, roles_cannot_access
 from WeddingWebsite.extensions import mongo
 from WeddingWebsite.forms import EditForm
 from WeddingWebsite.models import GuestCollection
@@ -52,21 +51,9 @@ def registry():
 @login_required
 def location():
     if "cabin_stayer" in current_user.roles:
-        return redirect(url_for("views.location_cabin"))
+        return "You are staying in the cabin"
     else:
-        return redirect(url_for("views.location_hotel"))
-
-
-@views.route("/location/cabin")
-@requires_roles("cabin_stayer")
-def location_cabin():
-    return "You are staying in the cabin"
-
-
-@views.route("/location/hotel")
-@roles_cannot_access("cabin_stayer")
-def location_hotel():
-    return "You will be staying in a hotel."
+        return "You will be staying in a hotel."
 
 
 @views.route("/photos")
