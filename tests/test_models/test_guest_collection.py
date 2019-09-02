@@ -12,7 +12,7 @@ def test_init_empty_db(mongo_db):
     assert not gc.guests
 
 
-def test_init(mongo_db):
+def test_init():
     """
     GIVEN a populated DB
     WHEN a Guest Collection is initialized
@@ -22,7 +22,7 @@ def test_init(mongo_db):
     assert len(gc) == 4
 
 
-def test_is_iterable(mongo_db):
+def test_is_iterable():
     """
     GIVEN a (populated) Guest Collection
     WHEN it is iterated across
@@ -37,7 +37,7 @@ def test_is_iterable(mongo_db):
         assert False
 
 
-def test_str(mongo_db):
+def test_str():
     """
     GIVEN a populated Guest Collection
     CHECK that the __str__ method acts as intended
