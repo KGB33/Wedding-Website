@@ -82,9 +82,15 @@ class GuestCollection:
     def __init__(self):
         self.guests = [Guest(**x) for x in mongo.db.guests.find({})]
 
-    def get_guest_by_id(self, id):
+    def get_guest_by_id(self, _id):
         for guest in self.guests:
-            if guest.id == ObjectId(id):
+            if guest.id == ObjectId(_id):
+                return guest
+        return None
+
+    def get_guest_by_username(self, username):
+        for guest in self.guests:
+            if guest.username == username:
                 return guest
         return None
 
