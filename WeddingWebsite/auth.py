@@ -98,7 +98,6 @@ def requires_roles(*roles):
 
             for role in roles:
                 if role not in current_user.roles:
-                    print(f"{current_user} does not have required role {role}.")
                     return redirect(url_for("auth.unauthorized_role"))
             return func(*args, **kwargs)
 
