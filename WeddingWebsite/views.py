@@ -32,7 +32,14 @@ def rsvp():
 @views.route("/dress_code")
 @login_required
 def dress_code():
-    return "This is the dress code page"
+    if current_user.roles is None:
+        return render_template("dress_code/default.html")
+    if "bridesmaid" in current_user.roles:
+        return render_template("dress_code/bridesmaid.html")
+    if "groomsman" in current_user.roles:
+        return render_template("dress_code/groomsmen.html")
+    if "wedding_party" in current_user.roles:
+        return render_template("dress_code/wedding_party.html")
 
 
 @views.route("/registry")
