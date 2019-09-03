@@ -19,7 +19,7 @@ def test_init():
     THEN check that GuestCollection.guests contains all guests
     """
     gc = GuestCollection()
-    assert len(gc) == 4
+    assert len(gc) == 5
 
 
 def test_is_iterable():

@@ -87,6 +87,16 @@ def mongo_db():
         roles=["wedding_party"],
     ).add_to_mongodb(mongo.db)
 
+    # Add Admin Tester
+    Guest(
+        _id=None,
+        username="t_admin",
+        _password="123456",
+        name="t_admin",
+        email="ta@test.org",
+        roles=["admin"],
+    ).add_to_mongodb(mongo.db)
+
     yield mongo.db
 
     mongo.db.guests.drop()
