@@ -16,6 +16,8 @@ class Guest(UserMixin):
     email: str
     roles: list = None
     party: list = None
+    RSVP_status: list = None
+    dietary_restrictions: list = None
 
     def __post_init__(self):
         # Sets password hash on user registration
@@ -70,6 +72,8 @@ class Guest(UserMixin):
                     "email": self.email,
                     "roles": self.roles,
                     "party": self.party,
+                    "RSVP_status": self.RSVP_status,
+                    "dietary_restrictions": self.dietary_restrictions,
                 }
             },
         )

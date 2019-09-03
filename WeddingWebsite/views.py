@@ -2,7 +2,7 @@ from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, fresh_login_required, login_required
 
 from WeddingWebsite.extensions import mongo
-from WeddingWebsite.forms import EditForm
+from WeddingWebsite.forms import EditForm, RSVPForm
 from WeddingWebsite.models import GuestCollection
 
 
@@ -22,10 +22,15 @@ def home():
     return render_template("home.html")
 
 
-@views.route("/rsvp")
+@views.route("/rsvp", methods=["GET", "POST"])
 @login_required
 def rsvp():
-    return "RSVP Page"
+    form = RSVPForm()
+    if form.validate_on_submit():
+        current_user.dietary_restrictions = form.diet.data
+        current_user.RSVP_status = form.status.data
+        current_user.update_db(mongo.db)
+    return render_template("RSVP.html", form=form)
 
 
 @views.route("/dress_code")
@@ -50,10 +55,10 @@ def registry():
 @views.route("/location")
 @login_required
 def location():
-    if "cabin_stayer" in current_user.roles:
-        return "You are staying in the cabin"
-    else:
-        return "You will be staying in a hotel."
+    if current_user.roles is not None:
+        if "cabin_stayer" in current_user.roles:
+            return "You are staying in the cabin"
+    return "You will be staying in a hotel."
 
 
 @views.route("/photos")
