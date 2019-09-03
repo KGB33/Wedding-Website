@@ -1,0 +1,12 @@
+.background {
+  background-image: url("images/home_background.png"); /* The image used */
+  background-color: #659DBD; /* Used if the image is unavailable */
+  height: 1051px; /* You must set a specified height */
+  background-position: center top; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.block {
+  padding: 10px;
+}
