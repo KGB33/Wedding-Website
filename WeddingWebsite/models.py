@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 from flask_login import UserMixin
 from flask_pymongo import ObjectId
@@ -48,35 +48,12 @@ class Guest(UserMixin):
 
     def add_to_mongodb(self, db):
         guests = db.guests
-        result = guests.insert_one(
-            {
-                "username": self.username,
-                "_password": self._password,
-                "name": self.name,
-                "email": self.email,
-                "roles": self.roles,
-                "party": self.party,
-            }
-        )
+        result = guests.insert_one(asdict(self))
         self.id = result.inserted_id
         return result
 
     def update_db(self, db):
-        result = db.guests.update_one(
-            {"_id": self.id},
-            {
-                "$set": {
-                    "username": self.username,
-                    "_password": self._password,
-                    "name": self.name,
-                    "email": self.email,
-                    "roles": self.roles,
-                    "party": self.party,
-                    "RSVP_status": self.RSVP_status,
-                    "dietary_restrictions": self.dietary_restrictions,
-                }
-            },
-        )
+        result = db.guests.update_one({"_id": self.id}, {"$set": asdict(self)})
         if result.modified_count != 1:
             return False
         return True
