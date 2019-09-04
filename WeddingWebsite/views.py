@@ -45,6 +45,7 @@ def dress_code():
         return render_template("dress_code/groomsmen.html")
     if "wedding_party" in current_user.roles:
         return render_template("dress_code/wedding_party.html")
+    return render_template("dress_code/default.html")
 
 
 @views.route("/registry")
@@ -58,8 +59,8 @@ def registry():
 def location():
     if current_user.roles is not None:
         if "cabin_stayer" in current_user.roles:
-            return "You are staying in the cabin"
-    return "You will be staying in a hotel."
+            return render_template("location_cabin.html")
+    return render_template("location_hotel.html")
 
 
 @views.route("/photos")
