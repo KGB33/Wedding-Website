@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<!-- location_hotel.html -->
+<head>
+    <link href="static/base.css" rel="stylesheet" type="text/css">
+    <link href="static/location.css" rel="stylesheet" type="text/css">
+    <style> .background {background-image: url("static/images/hotel_background.jpg"); height: 4080px} </style>
+</head>
+
+<!-- Header -->
+<div class="header">
+  <h1>Hannah and Kelton's Wedding</h1>
+</div>
+
+<!-- Navigation Bar -->
+<div class="info-blab">
+  <p>When: May 21st. Where: Keystone, CO.</p>
+</div>
+
+<div class="background">
+    <div class='row'>
+        <div class="col">
+            <div class="block">
+                <h2>There are several hotels in the area.</h2>
+                    <p>
+                        Luckily for us late May is the off season, so there will be plenty of rooms available in town.
+                        The venue is located in Keystone, CO. however the nearby towns of Silverthorne, Dillon and, Frisco are all less than
+                        a 10 minute drive away.
+                    </p>
+            </div>
+        </div>
+    </div>
+    <div class='row'>
+        <div class="col">
+            <div class="block">
+                <h2>The Venue</h2>
+                    <div class="iframe-div">
+                        <iframe allowfullscreen="" class="iframe-resp" frameborder="0" height="450" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4447.552047953827!2d-105.98753517204347!3d39.60020423895823!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876a59c3b4b088a7%3A0x10dc0d4c68882a1e!2sSummit%20BnB%20-%20Porcupine%20Basecamp!5e0!3m2!1sen!2sus!4v1567616056002!5m2!1sen!2sus" style="border:0;" width="600"></iframe>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
