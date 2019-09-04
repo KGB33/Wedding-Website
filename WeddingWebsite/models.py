@@ -49,7 +49,9 @@ class Guest(UserMixin):
 
     def add_to_mongodb(self, db):
         guests = db.guests
-        result = guests.insert_one(asdict(self))
+        guest_to_add = asdict(self)
+        del guest_to_add["_id"]
+        result = guests.insert_one(guest_to_add)
         self.id = result.inserted_id
         return result
 
