@@ -7,6 +7,41 @@
   background-size: cover; /* Resize the background image to cover the entire container */
 }
 
+.header {
+  background-image: url("images/sitting_bench.jpg");
+  background-color: #4B5B33;
+  background-position: center bottom; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: 100%; /* Resize the background image to cover the entire container */
+  padding: 75px;
+  text-align: center;
+  color: #7CC0AC;
+}
+
 .block {
+  text-align: center;
+  margin: 20px;
+  background: #596C5E;
+  border: solid 2px black;
+  opacity: 0.9;
+}
+
+.block a {
+  display: block;
   padding: 10px;
 }
+
+a:link {
+  color: #7CC0AC;
+  text-decoration: None;
+}
+
+a:visited {
+  color: #7CC0AC;
+  text-decoration: None;
+}
+
+div.block:hover {
+  box-shadow: 5px 10px 18px rgba(80, 99, 85, 0.51)
+}
+
