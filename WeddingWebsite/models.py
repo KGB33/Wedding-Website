@@ -17,6 +17,7 @@ class Guest(UserMixin):
     roles: list = None
     party: list = None
     RSVP_status: list = None
+    plus_one: list = None
     dietary_restrictions: list = None
 
     def __post_init__(self):

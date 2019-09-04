@@ -29,6 +29,7 @@ def rsvp():
     if form.validate_on_submit():
         current_user.dietary_restrictions = form.diet.data
         current_user.RSVP_status = form.status.data
+        current_user.plus_one = form.plus_one_status.data
         current_user.update_db(mongo.db)
     return render_template("RSVP.html", form=form)
 

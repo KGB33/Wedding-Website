@@ -6,7 +6,15 @@
 <form action="" method="post">
     <p>
         {{ form.csrf_token }}
+
+        <h3>Will you be attending?</h3>
         {{ form.status }}
+
+        <h3>Will you be bringing a plus one?</h3>
+        {{ form.plus_one_status }}
+
+        <h3>Any Dietary Restrictions</h3>
+        <h6>(for you and your guest)</h6>
         {{ form.diet }}
         {{ form.submit() }}
     </p>

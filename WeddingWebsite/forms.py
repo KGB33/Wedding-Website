@@ -66,7 +66,7 @@ class EditForm(FlaskForm):
 
 
 class RSVPForm(FlaskForm):
-    status_choices = ["yes", "no", "maybe"]
+    status_choices = ["yes", "no", "undecided"]
     diet_choices = [
         "no pork",
         "no beef",
@@ -76,8 +76,12 @@ class RSVPForm(FlaskForm):
         "no dairy",
         "no eggs",
         "no nuts",
+        "no gluten",
     ]
     status = RadioField("Going?", choices=[(x, x.title()) for x in status_choices])
+    plus_one_status = RadioField(
+        "Going?", choices=[(x, x.title()) for x in status_choices]
+    )
     diet = MultiCheckboxField(
         "Food Restrictions/allergies:", choices=[(x, x.title()) for x in diet_choices]
     )
