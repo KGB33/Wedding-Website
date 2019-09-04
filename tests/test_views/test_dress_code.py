@@ -23,6 +23,17 @@ class TestDressCode:
         assert response.status_code == 200
         assert b"/dress_code/default.html" in response.data
 
+    def test_dress_code_auth_user_no_dress_code_roles(self, test_client):
+        """
+        GIVEN a flask app
+        WHEN a auth user with no dress_code roles requests '/dress_code'
+        THEN check that they are shown '/dress_code/default.html'
+        """
+        assert log_in(test_client, username="t_admin")
+        response = test_client.get("/dress_code")
+        assert response.status_code == 200
+        assert b"/dress_code/default.html" in response.data
+
     def test_dress_code_auth_user_bridesmaid_role(self, test_client):
         """
         GIVEN a flask app
