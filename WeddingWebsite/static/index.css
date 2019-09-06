@@ -1,0 +1,40 @@
+.background {
+  background-image: url("images/index_background.png"); /* The image used */
+  background-color: #659DBD; /* Used if the image is unavailable */
+  height: 1124px; /* You must set a specified height */
+  background-position: center top; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.main {
+  padding-top: 50px;
+}
+
+.block {
+  width: max-content;
+  text-align: center;
+  margin: 20px auto;
+  background: #596C5E;
+  border: solid 2px black;
+  opacity: 0.9;
+}
+
+
+.block a {
+  padding: 10px;
+}
+
+a:link {
+  color: #7CC0AC;
+  text-decoration: None;
+}
+
+a:visited {
+  color: #7CC0AC;
+  text-decoration: None;
+}
+
+div.block:hover {
+  box-shadow: 5px 10px 18px rgba(80, 99, 85, 0.51)
+}

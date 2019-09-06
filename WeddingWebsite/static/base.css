@@ -13,8 +13,9 @@ body {
 .info-blab {
   padding-left: 20px;
   display: flex;
-  background-color: #1A223C;
+  background-color: #042a30;
   color: #7CC0AC;
+  font-size: 20px;
 
 }
 

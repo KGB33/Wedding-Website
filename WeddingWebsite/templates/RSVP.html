@@ -10,12 +10,20 @@
         <h3>Will you be attending?</h3>
         {{ form.status }}
 
+        <p>Current Status: {{ guest.RSVP_status }}</p>
+
         <h3>Will you be bringing a plus one?</h3>
         {{ form.plus_one_status }}
+
+        <p>Current Status: {{ guest.plus_one }}</p>
 
         <h3>Any Dietary Restrictions</h3>
         <h6>(for you and your guest)</h6>
         {{ form.diet }}
+
+        <p>Current Status: {{ guest.dietary_restrictions }}</p>
+
+
         {{ form.submit() }}
     </p>
 

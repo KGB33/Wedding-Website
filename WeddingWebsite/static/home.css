@@ -9,35 +9,44 @@
 
 .header {
   background-image: url("images/sitting_bench.jpg");
-  background-color: #4B5B33;
+  background-color: #042a30;
   background-position: center bottom; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: 100%; /* Resize the background image to cover the entire container */
+  height: 325px;
   padding: 75px;
   text-align: center;
-  color: #7CC0AC;
+  color: #FFF;
+}
+
+.header .block{
+  width: max-content;
+  text-align: center;
+  margin: 0 auto;
+  padding: 5px;
 }
 
 .block {
   text-align: center;
-  margin: 20px;
-  background: #596C5E;
-  border: solid 2px black;
+  margin: 20px 30px;
+  background: #5f934e;
+  border: solid 3px black;
   opacity: 0.9;
+  font-size: 20px;
 }
 
 .block a {
   display: block;
-  padding: 10px;
+  padding: 1px;
 }
 
 a:link {
-  color: #7CC0AC;
+  color: #000;
   text-decoration: None;
 }
 
 a:visited {
-  color: #7CC0AC;
+  color: #000;
   text-decoration: None;
 }
 

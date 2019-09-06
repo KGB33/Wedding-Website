@@ -31,7 +31,7 @@ def rsvp():
         current_user.RSVP_status = form.status.data
         current_user.plus_one = form.plus_one_status.data
         current_user.update_db(mongo.db)
-    return render_template("RSVP.html", form=form)
+    return render_template("RSVP.html", form=form, guest=current_user)
 
 
 @views.route("/dress_code")
