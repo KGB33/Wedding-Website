@@ -5,22 +5,11 @@
   background-size: cover; /* Resize the background image to cover the entire container */
 }
 
-.header {
-  background-image: url("images/sitting_bench.jpg");
-  background-color: #4B5B33;
-  background-position: center bottom; /* Center the image */
-  background-repeat: no-repeat; /* Do not repeat the image */
-  background-size: 100%; /* Resize the background image to cover the entire container */
-  padding: 75px;
-  text-align: center;
-  color: #7CC0AC;
-}
-
 .iframe-div {
     position: relative;
     overflow: hidden;
     padding-top: 56.25%;
-    margin: 5px;
+    margin: 0 30px 30px 30px;
 }
 
 .iframe-resp {
@@ -35,14 +24,5 @@
 /* Main column */
 .col {
   flex: 100%;
-}
-
-
-.block {
-  text-align: center;
-  margin: 20px;
-  background: #596C5E;
-  border: solid 2px black;
-  opacity: 0.9;
 }
 

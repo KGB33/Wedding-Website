@@ -5,6 +5,7 @@
         <title>H & K Wedding</title>
     </head>
     <body>
+    <div class="nav_bar">
         <div>
             WedWeb:
             <a href="{{ url_for('views.index') }}">Home</a>
@@ -24,6 +25,22 @@
         </ul>
         {% endif %}
         {% endwith %}
-        {% block content %}{% endblock %}
+    </div>
+    <!-- Header -->
+    <div class="header">
+        <div class="block">
+            <h1>Hannah & Kelton's<br>Wedding</h1>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <div class="info-blab">
+      <p>When: May 21st. Where: Keystone, CO.</p>
+    </div>
+
+
+{% block content %}
+{% endblock %}
     </body>
+
 </html>

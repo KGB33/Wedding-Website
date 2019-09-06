@@ -9,14 +9,45 @@ body {
 }
 
 
-/* Style the top navigation bar */
-.info-blab {
+.header {
+  background-image: url("images/sitting_bench.jpg");
+  background-color: #042a30;
+  background-position: center bottom; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: 100%; /* Resize the background image to cover the entire container */
+  height: 325px;
+  padding: 75px 10px;
+  text-align: center;
+  color: #FFF;
+}
+
+.header .block{
+  position: center;
+  width: max-content;
+  text-align: center;
+  margin: auto auto;
+  padding: 10px;
+  overflow-wrap: break-spaces;
+}
+
+
+.info-blab, .nav_bar {
   padding-left: 20px;
   display: flex;
   background-color: #042a30;
   color: #7CC0AC;
   font-size: 20px;
 
+}
+
+.nav_bar a:link, a:visited {
+  color: #7CC0AC;
+}
+
+.nav_bar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
 }
 
 /* Column container */
@@ -37,6 +68,32 @@ body {
 .right {
   flex: 50%;
 }
+
+
+.block {
+  text-align: center;
+  margin: 20px 30px;
+  background: #5f934e;
+  border: solid 3px black;
+  opacity: 0.9;
+  font-size: 20px;
+}
+
+.block a {
+  display: block;
+  padding: 1px;
+}
+
+.block a:link {
+  color: #000;
+  text-decoration: None;
+}
+
+.block a:visited {
+  color: #000;
+  text-decoration: None;
+}
+
 
 /* Footer */
 .footer {
