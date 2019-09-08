@@ -1,7 +1,7 @@
 from tests.conftest import log_in
 
 
-def test_logout_auth_user(test_client, mongo_db):
+def test_logout_auth_user(test_client):
     """
     GIVEN a flask app
     WHEN an authorized user logs out
@@ -10,7 +10,7 @@ def test_logout_auth_user(test_client, mongo_db):
     assert log_in(test_client)
     response = test_client.get("auth/logout", follow_redirects=True)
     assert response.status_code == 200
-    assert b"Hi !" in response.data
+    assert b"<!-- index.html -->" in response.data
     assert b"You have been logged out." in response.data
 
 
@@ -22,5 +22,5 @@ def test_logout_anon_user(test_client):
     """
     response = test_client.get("auth/logout", follow_redirects=True)
     assert response.status_code == 200
-    assert b"Hi !" in response.data
+    assert b"<!-- index.html -->" in response.data
     assert b"You were not, and still are not, logged in." in response.data

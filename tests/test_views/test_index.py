@@ -9,8 +9,7 @@ def test_index(test_client):
     """
     response = test_client.get("/")
     assert response.status_code == 200
-    assert b"Home Page" in response.data
-    assert b"Hi !" in response.data
+    assert b"<!-- index.html -->" in response.data
 
 
 def test_index_logged_in(test_client):
@@ -23,4 +22,3 @@ def test_index_logged_in(test_client):
     response = test_client.get("/", follow_redirects=True)
     assert response.status_code == 200
     assert b"<!-- Home.html -->" in response.data
-    assert b'<link href="static/base.css"' in response.data
