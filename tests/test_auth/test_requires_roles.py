@@ -1,7 +1,7 @@
 import pytest
 
 from tests.conftest import log_in
-from WeddingWebsite.auth import requires_roles
+from WeddingWebsite.auth.auth import requires_roles
 from WeddingWebsite.exceptions import NoRolesProvided
 
 

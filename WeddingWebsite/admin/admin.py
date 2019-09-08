@@ -1,12 +1,18 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
 
-from WeddingWebsite.auth import requires_roles
+from WeddingWebsite.auth.auth import requires_roles
 from WeddingWebsite.extensions import mongo
 from WeddingWebsite.forms import EditForm
 from WeddingWebsite.models import GuestCollection
 
 
-admin = Blueprint("admin", __name__, url_prefix="/admin")
+admin = Blueprint(
+    "admin",
+    __name__,
+    url_prefix="/admin",
+    template_folder="templates",
+    static_folder="static",
+)
 
 
 @admin.route("/")
@@ -14,14 +20,14 @@ admin = Blueprint("admin", __name__, url_prefix="/admin")
 @requires_roles("admin")
 def index():
     guests = GuestCollection()
-    return render_template("admin/dashboard_guests.html", guests=guests)
+    return render_template("dashboard_guests.html", guests=guests)
 
 
 @admin.route("/guest/<guest_id>")
 @requires_roles("admin")
 def view_guest(guest_id):
     guest = GuestCollection().get_guest_by_id(guest_id)
-    return render_template("admin/guest.html", guest=guest)
+    return render_template("guest.html", guest=guest)
 
 
 @admin.route("/guest/<guest_id>/edit", methods=["GET", "POST"])
@@ -41,4 +47,4 @@ def edit_guest(guest_id):
         guest.update_db(mongo.db)
         flash("Changes Saved")
         return redirect(url_for("admin.view_guest", guest_id=guest_id))
-    return render_template("admin/guest_edit.html", guest=guest, form=form)
+    return render_template("guest_edit.html", guest=guest, form=form)

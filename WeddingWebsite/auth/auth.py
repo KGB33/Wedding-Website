@@ -11,7 +11,13 @@ from WeddingWebsite.forms import LoginForm, RegistrationForm
 from WeddingWebsite.models import Guest
 
 
-auth = Blueprint("auth", __name__, url_prefix="/auth")
+auth = Blueprint(
+    "auth",
+    __name__,
+    url_prefix="/auth",
+    template_folder="templates",
+    static_folder="static",
+)
 
 
 @auth.route("/login", methods=["GET", "POST"])

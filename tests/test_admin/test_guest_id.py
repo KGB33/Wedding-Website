@@ -12,7 +12,9 @@ def test_admin_guest_view_default_guest(test_client, mongo_db):
     THEN check that 't_default's data is displayed
     """
     assert log_in(test_client, username="t_admin")
-    response = test_client.get(f"/admin/guest/{get_guest_id(mongo_db)}")
+    response = test_client.get(
+        f"/admin/guest/{get_guest_id(mongo_db)}", follow_redirects=True
+    )
     assert response.status_code == 200
     print(response.data)
     assert b"<title> t_default </title>" in response.data

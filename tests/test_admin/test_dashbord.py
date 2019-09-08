@@ -42,7 +42,7 @@ class TestDashboardView:
     def test_template_render(self, test_client):
         """
         GIVEN a flask app
-        WHEN the '/admin page is requested by the appropriate user
+        WHEN the '/admin' page is requested by the appropriate user
         THEN check that the template displays all registered users appropriately
         """
         assert log_in(test_client, username="t_admin")
@@ -61,7 +61,7 @@ class TestDashboardView:
         CHECK that the routes '/admin' and '/admin/guest' return the same content
         """
         assert log_in(test_client, username="t_admin")
-        response_1 = test_client.get("/admin", follow_redirects=True)
+        response_1 = test_client.get("/admin/")
         response_2 = test_client.get("/admin/guests", follow_redirects=True)
         assert response_1.status_code == 200
         assert response_2.status_code == 200

@@ -1,7 +1,7 @@
 import pytest
 
 from WeddingWebsite import create_app
-from WeddingWebsite.auth import requires_roles, roles_cannot_access
+from WeddingWebsite.auth.auth import requires_roles, roles_cannot_access
 from WeddingWebsite.models import Guest
 
 

@@ -1,7 +1,7 @@
 import pytest
 
 from tests.conftest import log_in
-from WeddingWebsite.auth import roles_cannot_access
+from WeddingWebsite.auth.auth import roles_cannot_access
 from WeddingWebsite.exceptions import NoRolesProvided
 
 
