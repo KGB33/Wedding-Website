@@ -1,5 +1,3 @@
-import pytest
-
 from tests.conftest import log_in
 
 
@@ -34,11 +32,15 @@ def test_rsvp_first_entry(test_client):
     assert b"Current Status: undecided" in response.data
 
 
-@pytest.mark.xfail
 def test_rsvp_submit_form_empty_status(test_client):
     """
     GIVEN a flask app
-    WHEN the user submits '/rsvp' where the form.status is not provided
+    WHEN the user submits '/rsvp' where the form.status and form.plus_one_status is not provided
     THEN check that the value in the db is unchanged
     """
-    assert False
+    assert log_in(test_client)
+    response = test_client.post(
+        "/rsvp", data={"diet": ["no pork", "no gluten", "no nuts"]}
+    )
+    assert response.status_code == 200
+    assert response.data.count(b"[This field is required.]") == 2

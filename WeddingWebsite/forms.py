@@ -8,7 +8,13 @@ from wtforms import (
     SubmitField,
     widgets,
 )
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms.validators import (
+    DataRequired,
+    Email,
+    EqualTo,
+    InputRequired,
+    ValidationError,
+)
 
 from WeddingWebsite import mongo
 
@@ -78,9 +84,15 @@ class RSVPForm(FlaskForm):
         "no nuts",
         "no gluten",
     ]
-    status = RadioField("Going?", choices=[(x, x.title()) for x in status_choices])
+    status = RadioField(
+        "Going?",
+        choices=[(x, x.title()) for x in status_choices],
+        validators=[InputRequired()],
+    )
     plus_one_status = RadioField(
-        "Going?", choices=[(x, x.title()) for x in status_choices]
+        "Going?",
+        choices=[(x, x.title()) for x in status_choices],
+        validators=[InputRequired()],
     )
     diet = MultiCheckboxField(
         "Food Restrictions/allergies:", choices=[(x, x.title()) for x in diet_choices]
