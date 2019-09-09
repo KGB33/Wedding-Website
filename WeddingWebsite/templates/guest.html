@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> {{ guest.username }} </title>
+</head>
+<body>
+    <h1>{{ guest.__str__() }}</h1>
+    <ul>
+        <li>Name: {{ guest.name }}</li>
+        <li>Email: {{ guest.email }}</li>
+        <li>Roles:
+            {% if guest.roles %}
+                <ul>
+                {% for role in guest.roles %}
+                    <li>{{ role }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                None
+            {% endif %}
+        </li>
+        <li>Party:
+            {% if guest.party %}
+                <ul>
+                {% for p in guest.party %}
+                    <li>{{ p }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                None
+            {% endif %}
+        </li>
+    </ul>
+
+</body>
+</html>
