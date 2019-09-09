@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
 
-from WeddingWebsite.auth.auth import requires_roles
+from WeddingWebsite.auth import requires_roles
 from WeddingWebsite.extensions import mongo
 from WeddingWebsite.forms import EditForm
 from WeddingWebsite.models import GuestCollection

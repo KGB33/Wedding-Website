@@ -59,8 +59,8 @@ def create_app(test_config=None):
 def register_blueprints(app):
     # Register Blueprints
     from . import views
-    from WeddingWebsite.admin import admin
-    from WeddingWebsite.auth import auth
+    from WeddingWebsite import admin
+    from WeddingWebsite import auth
 
     app.register_blueprint(views.views)
     app.register_blueprint(auth.auth)
