@@ -1,3 +1,6 @@
+import hashlib
+from unittest import mock
+
 import pytest
 
 from WeddingWebsite import create_app
@@ -45,61 +48,64 @@ def test_client():
 
 
 @pytest.fixture(autouse=True)
-def mongo_db():
-    from WeddingWebsite.extensions import mongo
+def mongo_db(request):
+    if "no_mongo_db" in request.keywords:
+        yield None
+    else:
+        from WeddingWebsite.extensions import mongo
 
-    # Add Default boring Guest
-    Guest(
-        _id=None,
-        username="t_default",
-        _password="123456",
-        name="t_default",
-        email="td@test.org",
-    ).add_to_mongodb(mongo.db)
+        # Add Default boring Guest
+        Guest(
+            _id=None,
+            username="t_default",
+            _password="123456",
+            name="t_default",
+            email="td@test.org",
+        ).add_to_mongodb(mongo.db)
 
-    # Add Groomsman Tester
-    Guest(
-        _id=None,
-        username="t_groomsman",
-        _password="123456",
-        name="t_groomsman",
-        email="tg@test.org",
-        roles=["groomsman"],
-    ).add_to_mongodb(mongo.db)
+        # Add Groomsman Tester
+        Guest(
+            _id=None,
+            username="t_groomsman",
+            _password="123456",
+            name="t_groomsman",
+            email="tg@test.org",
+            roles=["groomsman"],
+        ).add_to_mongodb(mongo.db)
 
-    # Add Bridesmaid Tester
-    Guest(
-        _id=None,
-        username="t_bridesmaid",
-        _password="123456",
-        name="t_bridesmaid",
-        email="tb@test.org",
-        roles=["bridesmaid"],
-    ).add_to_mongodb(mongo.db)
+        # Add Bridesmaid Tester
+        Guest(
+            _id=None,
+            username="t_bridesmaid",
+            _password="123456",
+            name="t_bridesmaid",
+            email="tb@test.org",
+            roles=["bridesmaid"],
+        ).add_to_mongodb(mongo.db)
 
-    # Add Wedding Party Tester
-    Guest(
-        _id=None,
-        username="t_wedding_party",
-        _password="123456",
-        name="t_wedding_party",
-        email="twp@test.org",
-        roles=["wedding_party"],
-    ).add_to_mongodb(mongo.db)
+        # Add Wedding Party Tester
+        Guest(
+            _id=None,
+            username="t_wedding_party",
+            _password="123456",
+            name="t_wedding_party",
+            email="twp@test.org",
+            roles=["wedding_party"],
+        ).add_to_mongodb(mongo.db)
 
-    # Add Admin Tester
-    Guest(
-        _id=None,
-        username="t_admin",
-        _password="123456",
-        name="t_admin",
-        email="ta@test.org",
-        roles=["admin"],
-    ).add_to_mongodb(mongo.db)
+        # Add Admin Tester
+        Guest(
+            _id=None,
+            username="t_admin",
+            _password="123456",
+            name="t_admin",
+            email="ta@test.org",
+            roles=["admin"],
+        ).add_to_mongodb(mongo.db)
 
-    yield mongo.db
+        yield mongo.db
 
-    mongo.db.guests.drop()
+        mongo.db.guests.drop()
 
 
 def log_in(app, username="t_default", password="123456"):
@@ -111,3 +117,17 @@ def log_in(app, username="t_default", password="123456"):
     if b"Logged in" in response.data:
         return True
     return False
+
+
+@pytest.fixture(autouse=True)
+def mock_hashlib_pbkdf2(request):
+    """
+    Mocks the built in method hashlib.pbkdf2 to decrease test runtime.
+    """
+    if "no_mock_hashlib_pbkdf2" in request.keywords:
+        yield None
+    else:
+        with mock.patch.object(
+            hashlib, "pbkdf2_hmac", return_value=b"123465"
+        ) as _mocked_hash:
+            yield _mocked_hash
