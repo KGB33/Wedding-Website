@@ -16,7 +16,6 @@ def test_admin_guest_view_default_guest(test_client, mongo_db):
         f"/admin/guest/{get_guest_id(mongo_db)}", follow_redirects=True
     )
     assert response.status_code == 200
-    print(response.data)
     assert b"<title> t_default </title>" in response.data
     assert b"<li>Name: t_default</li>" in response.data
     assert b"<li>Email: td@test.org</li>" in response.data
