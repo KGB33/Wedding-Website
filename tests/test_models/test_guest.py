@@ -1,3 +1,4 @@
+import pytest
 from werkzeug.security import check_password_hash
 
 from WeddingWebsite.models import Guest
@@ -8,6 +9,7 @@ Tests for the Guest Model
 """
 
 
+@pytest.mark.no_mongo_db
 def test_init_guest(template_user):
     """
     GIVEN a Guest Model
@@ -23,6 +25,8 @@ def test_init_guest(template_user):
     assert template_user.party is None
 
 
+@pytest.mark.no_mongo_db
+@pytest.mark.no_mock_hashlib_pbkdf2
 def test_guest_check_password_change(template_user):
     """
     GIVEN a Guest model
@@ -35,6 +39,7 @@ def test_guest_check_password_change(template_user):
     assert not template_user.check_password("Not The Password")
 
 
+@pytest.mark.no_mongo_db
 def test_guest__str__(template_user):
     """
     GIVEN a Guest model
