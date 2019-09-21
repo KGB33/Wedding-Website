@@ -1,4 +1,4 @@
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 
 from flask_login import UserMixin
 from flask_pymongo import ObjectId
@@ -14,11 +14,11 @@ class Guest(UserMixin):
     _password: str
     name: str
     email: str
-    roles: list = None
-    party: list = None
-    RSVP_status: list = None
-    plus_one: list = None
-    dietary_restrictions: list = None
+    roles: list = field(default_factory=list)
+    party: list = field(default_factory=list)
+    RSVP_status: list = field(default_factory=list)
+    plus_one: list = field(default_factory=list)
+    dietary_restrictions: list = field(default_factory=list)
 
     def __post_init__(self):
         # Sets password hash on user registration

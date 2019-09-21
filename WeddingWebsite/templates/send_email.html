@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+        <link href="static/rsvp.css" rel="stylesheet" type="text/css">
+</head>
+
+<div class="background">
+        <h1>Send Email</h1>
+        <form action="" method="post">
+                {{ form.csrf_token }}
+
+                <h2>Subject</h2>
+                {{ form.subject }}
+
+
+                <h2>Message</h2>
+                {{ form.message }}
+
+
+                <h3>Send to EVERYONE</h3>
+                {{ form.send_to_all.label }}: {{ form.send_to_all }}
+
+                <h3>OR Send to select Roles</h3>
+                {{ form.recipients }}
+
+                <h4>Require ALL selected roles or ANY selected Roles</h4>
+                {{ form.require_any_all_roles }}
+
+
+                {{ form.submit() }}
+
+        </form>
+</div>
+
+{% endblock %}
