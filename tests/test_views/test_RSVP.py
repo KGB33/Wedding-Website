@@ -9,7 +9,7 @@ def test_rsvp_first_visit(test_client):
     """
     assert log_in(test_client)
     response = test_client.get("/rsvp")
-    assert b"Current Status: None" in response.data
+    assert b"Current Status: []" in response.data
 
 
 def test_rsvp_first_entry(test_client):

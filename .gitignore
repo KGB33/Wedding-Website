@@ -6,3 +6,7 @@ Pipfile.lock
 
 .pytest_cache
 /instance/
+
+__pycache__
+
+settings.json
