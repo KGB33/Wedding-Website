@@ -7,4 +7,6 @@ Pipfile.lock
 .pytest_cache
 /instance/
 
-.vscode
+__pycache__
+
+settings.json

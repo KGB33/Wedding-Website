@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <link href="static/rsvp.css" rel="stylesheet" type="text/css">
+</head>
+
+<div class="background">
+<h1>RSVP Reminder</h1>
+    <form action="" method="post">
+        {{ form.csrf_token }}
+
+        <h3>Confirm Send RSVP Reminder?</h3>
+        {{ form.submit() }}
+    </form>
+</div>
+
+{% endblock %}
