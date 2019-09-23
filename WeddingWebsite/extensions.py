@@ -3,6 +3,8 @@ from dataclasses import asdict, dataclass
 from flask_login import LoginManager
 from flask_pymongo import PyMongo
 
+from WeddingWebsite.exceptions import NoContentProvided
+
 
 # Create PyMongo DB
 mongo = PyMongo()
@@ -24,7 +26,7 @@ class Message:
     ):
         self.subject = subject
         if text_part is None and html_part is None:
-            raise TypeError("Cannot send Message with No Content")
+            raise NoContentProvided("Cannot send Message with No Content")
         self.text_part = text_part
         self.html_part = html_part
         self.recipients = recipients
