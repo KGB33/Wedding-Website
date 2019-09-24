@@ -16,8 +16,6 @@ def template_user():
         "_password": "123456",
         "name": "t_template_user",
         "email": "t_template_user@test.org",
-        "roles": None,
-        "party": None,
     }
     return Guest(**g_dict)
 
