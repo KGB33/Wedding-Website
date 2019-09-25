@@ -69,6 +69,7 @@ def register():
             form.name.data,
             form.email.data,
         )
+        guest.add_roles_from_code(form.code.data)
         guest.add_to_mongodb(mongo.db)
         flash("Congratulations, you are now a registered user!")
         return redirect(url_for("auth.login"))
