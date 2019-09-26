@@ -1,0 +1,7 @@
+flask
+flask-pymongo
+pytest
+flask-login
+flask-wtf
+mailjet-rest
+dnspython

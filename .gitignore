@@ -10,3 +10,5 @@ Pipfile.lock
 __pycache__
 
 settings.json
+
+.gcloudignore
