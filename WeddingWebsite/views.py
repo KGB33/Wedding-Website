@@ -51,7 +51,7 @@ def dress_code():
 @views.route("/registry")
 @login_required
 def registry():
-    return "This is the registry page"
+    return render_template("registry.html")
 
 
 @views.route("/location")
@@ -66,7 +66,7 @@ def location():
 @views.route("/photos")
 @login_required
 def photos():
-    return "This will be the photo place"
+    return render_template("photos.html")
 
 
 @views.route("/view_profile")
