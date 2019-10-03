@@ -5,8 +5,6 @@ from flask_login import UserMixin
 from flask_pymongo import ObjectId
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from WeddingWebsite.extensions import mongo
-
 
 @dataclass
 class Guest(UserMixin):
@@ -93,16 +91,15 @@ class Guest(UserMixin):
     def __str__(self):
         return f"User {self.username}, with id: {self.id}"
 
-    def add_to_mongodb(self, db):
-        guests = db.guests
+    def add_to_collection(self, collection):
         guest_to_add = asdict(self)
         del guest_to_add["_id"]
-        result = guests.insert_one(guest_to_add)
+        result = collection.insert_one(guest_to_add)
         self.id = result.inserted_id
         return result
 
-    def update_db(self, db):
-        result = db.guests.update_one({"_id": self.id}, {"$set": asdict(self)})
+    def update_collection(self, collection):
+        result = collection.update_one({"_id": self.id}, {"$set": asdict(self)})
         if result.modified_count != 1:
             return False
         return True
@@ -130,8 +127,8 @@ class Guest(UserMixin):
 
 
 class GuestCollection:
-    def __init__(self):
-        self.guests = [Guest(**x) for x in mongo.db.guests.find({})]
+    def __init__(self, collection):
+        self.guests = [Guest(**x) for x in collection.find({})]
 
     def get_guest_by_id(self, _id):
         for guest in self.guests:

@@ -30,7 +30,7 @@ def rsvp():
         current_user.dietary_restrictions = form.diet.data
         current_user.RSVP_status = form.status.data
         current_user.plus_one = form.plus_one_status.data
-        current_user.update_db(mongo.db)
+        current_user.update_collection(mongo.db.guests)
     return render_template("RSVP.html", form=form, guest=current_user)
 
 
@@ -93,5 +93,5 @@ def edit_profile():
             guest.name = form.name.data
         if form.email.data:
             guest.email = form.email.data
-        guest.update_db(mongo.db)
+        guest.update_collection(mongo.db)
         flash("Changes Saved")

@@ -33,7 +33,7 @@ def test_register_current_user_is_authenticated(test_client, mongo_db, template_
     WHEN a authenticated user attempts to register
     THEN check that they are redirected to the index page
     """
-    template_user.add_to_mongodb(mongo_db)
+    template_user.add_to_collection(mongo_db.guests)
     log_in(test_client)
     response = test_client.post("/auth/register", follow_redirects=True)
     assert response.status_code == 200
@@ -48,7 +48,7 @@ def test_register_new_user_with_bad_info(test_client, mongo_db, template_user):
     WHEN a user attempts to create an account with a taken email/username
     THEN check that an error message is flashed, and that the new user was not added to the db
     """
-    template_user.add_to_mongodb(mongo_db)
+    template_user.add_to_collection(mongo_db.guests)
     response = test_client.post(
         "/auth/register",
         data={  # Username and email taken by t_default
