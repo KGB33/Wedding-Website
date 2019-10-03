@@ -59,7 +59,7 @@ def mongo_db(request):
             _password="123456",
             name="t_default",
             email="td@test.org",
-        ).add_to_mongodb(mongo.db)
+        ).add_to_collection(mongo.db.guests)
 
         # Add Groomsman Tester
         Guest(
@@ -69,7 +69,7 @@ def mongo_db(request):
             name="t_groomsman",
             email="tg@test.org",
             roles=["groomsman"],
-        ).add_to_mongodb(mongo.db)
+        ).add_to_collection(mongo.db.guests)
 
         # Add Bridesmaid Tester
         Guest(
@@ -79,7 +79,7 @@ def mongo_db(request):
             name="t_bridesmaid",
             email="tb@test.org",
             roles=["bridesmaid"],
-        ).add_to_mongodb(mongo.db)
+        ).add_to_collection(mongo.db.guests)
 
         # Add Wedding Party Tester
         Guest(
@@ -89,7 +89,7 @@ def mongo_db(request):
             name="t_wedding_party",
             email="twp@test.org",
             roles=["wedding_party"],
-        ).add_to_mongodb(mongo.db)
+        ).add_to_collection(mongo.db.guests)
 
         # Add Admin Tester
         Guest(
@@ -99,7 +99,7 @@ def mongo_db(request):
             name="t_admin",
             email="ta@test.org",
             roles=["admin"],
-        ).add_to_mongodb(mongo.db)
+        ).add_to_collection(mongo.db.guests)
 
         yield mongo.db
 
