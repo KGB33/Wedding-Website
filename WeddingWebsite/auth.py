@@ -70,7 +70,7 @@ def register():
             form.email.data,
         )
         guest.add_roles_from_code(form.code.data)
-        guest.add_to_mongodb(mongo.db)
+        guest.add_to_collection(mongo.db.guests)
         flash("Congratulations, you are now a registered user!")
         return redirect(url_for("auth.login"))
     return render_template("register.html", title="Register", form=form)

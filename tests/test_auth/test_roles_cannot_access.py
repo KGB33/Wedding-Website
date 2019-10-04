@@ -12,7 +12,7 @@ def test_roles_cannot_access_valid(template_user, test_client, mongo_db):
     THEN check that they are redirected to the restricted
     """
     template_user.roles = ["any role under the sun"]
-    template_user.add_to_mongodb(mongo_db)
+    template_user.add_to_collection(mongo_db.guests)
     assert log_in(test_client, username="t_template_user")
     response = test_client.get("/test_roles_cannot_access")
     assert response.status_code == 200
@@ -26,7 +26,7 @@ def test_roles_cannot_access_invalid(template_user, test_client, mongo_db):
     THEN check that they are redirected to the 'You don't have the roles' page
     """
     template_user.roles = ["test_role_cannot_access"]
-    template_user.add_to_mongodb(mongo_db)
+    template_user.add_to_collection(mongo_db.guests)
     assert log_in(test_client, username="t_template_user")
     response = test_client.get("/test_roles_cannot_access", follow_redirects=True)
     assert response.status_code == 200
@@ -67,7 +67,7 @@ def test_roles_cannot_access_user_has_no_roles(test_client, template_user, mongo
     THEN check that the user is redirected to the restricted page
     """
     template_user.roles = None
-    template_user.add_to_mongodb(mongo_db)
+    template_user.add_to_collection(mongo_db.guests)
     log_in(test_client, username="t_template_user")
     response = test_client.get("/test_roles_cannot_access", follow_redirects=True)
     assert response.status_code == 200

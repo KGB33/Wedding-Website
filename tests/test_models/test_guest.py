@@ -54,13 +54,13 @@ def test_guest__str__(template_user):
 def test_update_db(mongo_db, template_user):
     """
     GIVEN a guest, guest, in a database
-    WHEN guest.update_db(db) is called
+    WHEN guest.update_collection(db) is called
     THEN check that the guest is updated correctly
     """
-    _id = template_user.add_to_mongodb(mongo_db).inserted_id
+    _id = template_user.add_to_collection(mongo_db.guests).inserted_id
     template_user.username = "A new Username!!"
     template_user.name = "A new Name!!"
-    template_user.update_db(mongo_db)
+    template_user.update_collection(mongo_db.guests)
     guest_from_db = Guest(**mongo_db.guests.find_one({"_id": _id}))
     assert template_user.username == guest_from_db.username
     assert template_user.name == guest_from_db.name
@@ -74,7 +74,7 @@ def test_update_db_guest_not_in(mongo_db, template_user):
     """
     template_user.username = "A new Username!!"
     template_user.name = "A new Name!!"
-    assert not template_user.update_db(mongo_db)
+    assert not template_user.update_collection(mongo_db.guests)
     assert mongo_db.guests.find_one({"username": "A new Username!!"}) is None
 
 

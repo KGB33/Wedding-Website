@@ -65,7 +65,7 @@ class TestDressCode:
         THEN check that they are redirected to '/dress_code/bridesmaid'
         """
         template_user.roles = ["bridesmaid", "wedding_party"]
-        template_user.add_to_mongodb(mongo_db)
+        template_user.add_to_collection(mongo_db.guests)
         assert log_in(test_client, username="t_template_user")
         response = test_client.get("/dress_code")
         assert response.status_code == 200
@@ -80,7 +80,7 @@ class TestDressCode:
         THEN check that they are redirected to '/dress_code/groomsmen'
         """
         template_user.roles = ["groomsman", "wedding_party"]
-        template_user.add_to_mongodb(mongo_db)
+        template_user.add_to_collection(mongo_db.guests)
         assert log_in(test_client, username="t_template_user")
         response = test_client.get("/dress_code")
         assert response.status_code == 200

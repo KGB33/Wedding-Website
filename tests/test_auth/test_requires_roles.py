@@ -12,7 +12,7 @@ def test_requires_roles_with_valid_roles(template_user, test_client, mongo_db):
     THEN Check that the user successfully accesses the route
     """
     template_user.roles = ["test_role"]
-    template_user.add_to_mongodb(mongo_db)
+    template_user.add_to_collection(mongo_db.guests)
     assert log_in(test_client, username="t_template_user")
     response = test_client.get("/test_requires_roles")
     assert response.status_code == 200
@@ -26,7 +26,7 @@ def test_requires_roles_with_invalid_roles(template_user, test_client, mongo_db)
     THEN Check that the user is redirected successfully to the unauthorized page
     """
     template_user.roles = ["test_role_fail"]
-    template_user.add_to_mongodb(mongo_db)
+    template_user.add_to_collection(mongo_db.guests)
     assert log_in(test_client, username="t_template_user")
     response = test_client.get("/test_requires_roles", follow_redirects=True)
     assert response.status_code == 200
@@ -67,7 +67,7 @@ def test_requires_roles_user_has_no_roles(test_client, template_user, mongo_db):
     THEN check that the user is redirected to the 'you don't have the required roles' page
     """
     template_user.roles = None
-    template_user.add_to_mongodb(mongo_db)
+    template_user.add_to_collection(mongo_db.guests)
     log_in(test_client, username="t_template_user")
     response = test_client.get("/test_requires_roles", follow_redirects=True)
     assert response.status_code == 200

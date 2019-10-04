@@ -5,6 +5,7 @@ import pytest
 
 from WeddingWebsite import create_app
 from WeddingWebsite.auth import requires_roles, roles_cannot_access
+from WeddingWebsite.config import TestingConfig
 from WeddingWebsite.models import Guest
 
 
@@ -20,9 +21,9 @@ def template_user():
     return Guest(**g_dict)
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def test_client():
-    flask_app = create_app(test_config="../tests/flask_test_config.py")
+    flask_app = create_app(TestingConfig)
 
     # Routes for testing Requires Roles
     @flask_app.route("/test_requires_roles")
@@ -46,12 +47,13 @@ def test_client():
 
 
 @pytest.fixture(autouse=True)
-def mongo_db(request):
+def mongo_db(request, test_client):
     if "no_mongo_db" in request.keywords:
         yield None
     else:
         from WeddingWebsite.extensions import mongo
 
+        # Add Guests
         # Add Default boring Guest
         Guest(
             _id=None,
@@ -59,7 +61,7 @@ def mongo_db(request):
             _password="123456",
             name="t_default",
             email="td@test.org",
-        ).add_to_mongodb(mongo.db)
+        ).add_to_collection(mongo.db.guests)
 
         # Add Groomsman Tester
         Guest(
@@ -69,7 +71,7 @@ def mongo_db(request):
             name="t_groomsman",
             email="tg@test.org",
             roles=["groomsman"],
-        ).add_to_mongodb(mongo.db)
+        ).add_to_collection(mongo.db.guests)
 
         # Add Bridesmaid Tester
         Guest(
@@ -79,7 +81,7 @@ def mongo_db(request):
             name="t_bridesmaid",
             email="tb@test.org",
             roles=["bridesmaid"],
-        ).add_to_mongodb(mongo.db)
+        ).add_to_collection(mongo.db.guests)
 
         # Add Wedding Party Tester
         Guest(
@@ -89,7 +91,7 @@ def mongo_db(request):
             name="t_wedding_party",
             email="twp@test.org",
             roles=["wedding_party"],
-        ).add_to_mongodb(mongo.db)
+        ).add_to_collection(mongo.db.guests)
 
         # Add Admin Tester
         Guest(
@@ -99,7 +101,7 @@ def mongo_db(request):
             name="t_admin",
             email="ta@test.org",
             roles=["admin"],
-        ).add_to_mongodb(mongo.db)
+        ).add_to_collection(mongo.db.guests)
 
         yield mongo.db
 
