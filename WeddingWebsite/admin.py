@@ -1,11 +1,10 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
-from mailjet_rest import Client as MJClient
 
 from WeddingWebsite.auth import requires_roles
-from WeddingWebsite.extensions import Message, mongo, Recipient
+from WeddingWebsite.extensions import mongo
 from WeddingWebsite.forms import ConfirmActionForm, EditForm, SendMailForm
+from WeddingWebsite.mail import build_custom_email, build_rsvp_email
 from WeddingWebsite.models import GuestCollection
-from WeddingWebsite.secrets import MJ_KEY, MJ_PASSWORD
 
 
 admin = Blueprint(
@@ -15,8 +14,6 @@ admin = Blueprint(
     template_folder="templates",
     static_folder="static",
 )
-
-mail_jet = MJClient(auth=(MJ_KEY, MJ_PASSWORD), version="v3.1")
 
 
 @admin.route("/")
@@ -59,17 +56,8 @@ def edit_guest(guest_id):
 def send_rsvp_reminder():
     form = ConfirmActionForm()
     if form.validate_on_submit():
-        recipients = [
-            Recipient(guest.email, guest.name)
-            for guest in GuestCollection()
-            if guest.RSVP_status is None or guest.RSVP_status == "undecided"
-        ]
-        msg = Message(
-            subject="Répondez s'il vous plaît!",
-            text_part="Please Update Your RSVP Status!",
-            recipients=recipients,
-        )
-        response = mail_jet.send.create(data=msg.as_dict())
+        msg = build_rsvp_email()
+        response = send_email(msg)
         return response.json()
     return render_template("send_rsvp_reminder.html", form=form)
 
@@ -79,27 +67,13 @@ def send_rsvp_reminder():
 def send_email():
     form = SendMailForm()
     if form.validate_on_submit():
-        if form.send_to_all.data:
-            recipients = [
-                Recipient(guest.email, guest.name) for guest in GuestCollection()
-            ]
-        elif form.require_any_all_roles.data == "all":
-            recipients = [
-                Recipient(guest.email, guest.name)
-                for guest in GuestCollection()
-                if all(role in guest.roles for role in form.recipients.data)
-            ]
-        else:
-            recipients = [
-                Recipient(guest.email, guest.name)
-                for guest in GuestCollection()
-                if any(role in guest.roles for role in form.recipients.data)
-            ]
-        msg = Message(
-            text_part=form.message.data,
-            subject=form.subject.data,
-            recipients=recipients,
+        msg = build_custom_email(
+            form.subject.data,
+            form.message.data,
+            form.recipients.data,
+            send_to_all=form.send_to_all.data,
+            require_any_all_roles=form.require_any_all_roles.data,
         )
-        response = mail_jet.send.create(data=msg.as_dict())
+        response = send_email(msg)
         return response.json()
     return render_template("send_email.html", form=form)

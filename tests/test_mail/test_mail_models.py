@@ -3,9 +3,10 @@ from dataclasses import asdict
 import pytest
 
 from WeddingWebsite.exceptions import NoContentProvided
-from WeddingWebsite.extensions import Message, Recipient
+from WeddingWebsite.mail import Message, Recipient
 
 
+@pytest.mark.no_mongo_db
 class TestMessage:
     def test_default_values(self):
         """ Asserts that the default values work as expected. """
@@ -49,7 +50,18 @@ class TestMessage:
         }
         assert expected.keys() == msg.as_dict().keys()
 
+    def test_eq_equal(self):
+        msg_1 = Message(text_part="")
+        msg_2 = Message(text_part="")
+        assert msg_1 == msg_2
 
+    def test_eq_unequal(self):
+        msg_1 = Message(html_part="")
+        msg_2 = Message(text_part="")
+        assert msg_1 != msg_2
+
+
+@pytest.mark.no_mongo_db
 class TestRecipient:
     def test_init(self):
         """
