@@ -29,8 +29,13 @@ def build_rsvp_email():
     return msg
 
 
-def build_custom_email(
-    subject, body, recipient_roles, send_to_all=False, require_any_all_roles="all"
+def build_custom_email(subject, body, recipients):
+    msg = Message(text_part=body, subject=subject, recipients=recipients)
+    return msg
+
+
+def get_recipients(
+    send_to_all=False, recipient_roles=None, require_any_all_roles="all"
 ):
     if send_to_all:
         recipients = [
@@ -43,14 +48,15 @@ def build_custom_email(
             for guest in GuestCollection(mongo.db.guests)
             if all(role in guest.roles for role in recipient_roles)
         ]
-    else:
+    elif require_any_all_roles == "any":
         recipients = [
             Recipient(guest.email, guest.name)
             for guest in GuestCollection(mongo.db.guests)
             if any(role in guest.roles for role in recipient_roles)
         ]
-    msg = Message(text_part=body, subject=subject, recipients=recipients)
-    return msg
+    else:
+        return None
+    return recipients
 
 
 # Mail
@@ -100,7 +106,7 @@ class Message:
         )
 
 
-@dataclass()
+@dataclass(eq=True, frozen=True)
 class Recipient:
     Email: str
     Name: str
