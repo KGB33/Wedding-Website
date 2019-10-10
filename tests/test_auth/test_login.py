@@ -40,7 +40,7 @@ def test_login_when_user_is_authenticated(test_client):
     WHEN the '/login' page is requested by an authenticated user
     THEN check that the user is redirected to '/' and a message is flashed
     """
-    assert log_in(test_client, username="t_default", password="123456")
+    log_in(test_client, username="t_default", password="123456")
     response = test_client.post("/auth/login", follow_redirects=True)
     assert response.status_code == 200
     assert b"<!-- Home.html -->" in response.data

@@ -7,7 +7,7 @@ def test_logout_auth_user(test_client):
     WHEN an authorized user logs out
     THEN check that the user was logged out successfully
     """
-    assert log_in(test_client)
+    log_in(test_client)
     response = test_client.get("auth/logout", follow_redirects=True)
     assert response.status_code == 200
     assert b"<!-- index.html -->" in response.data

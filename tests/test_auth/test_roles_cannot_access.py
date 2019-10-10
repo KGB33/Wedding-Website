@@ -13,7 +13,7 @@ def test_roles_cannot_access_valid(template_user, test_client, mongo_db):
     """
     template_user.roles = ["any role under the sun"]
     template_user.add_to_collection(mongo_db.guests)
-    assert log_in(test_client, username="t_template_user")
+    log_in(test_client, username="t_template_user")
     response = test_client.get("/test_roles_cannot_access")
     assert response.status_code == 200
     assert b"Access Granted" in response.data
@@ -27,7 +27,7 @@ def test_roles_cannot_access_invalid(template_user, test_client, mongo_db):
     """
     template_user.roles = ["test_role_cannot_access"]
     template_user.add_to_collection(mongo_db.guests)
-    assert log_in(test_client, username="t_template_user")
+    log_in(test_client, username="t_template_user")
     response = test_client.get("/test_roles_cannot_access", follow_redirects=True)
     assert response.status_code == 200
     assert b"you lack the required roles to view your requested page." in response.data
