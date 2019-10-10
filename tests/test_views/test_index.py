@@ -18,7 +18,7 @@ def test_index_logged_in(test_client):
     WHEN the '/' page is requested, and a user is logged in
     THEN check that the response is personalized
     """
-    assert log_in(test_client)
+    log_in(test_client)
     response = test_client.get("/", follow_redirects=True)
     assert response.status_code == 200
     assert b"<!-- Home.html -->" in response.data

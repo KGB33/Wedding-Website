@@ -115,8 +115,9 @@ def log_in(app, username="t_default", password="123456"):
         follow_redirects=True,
     )
     if b"Logged in" in response.data:
-        return True
-    return False
+        pass
+    else:
+        raise LoginFailedError
 
 
 @pytest.fixture(autouse=True)
@@ -131,3 +132,7 @@ def mock_hashlib_pbkdf2(request):
             hashlib, "pbkdf2_hmac", return_value=b"123465"
         ) as _mocked_hash:
             yield _mocked_hash
+
+
+class LoginFailedError(Exception):
+    pass

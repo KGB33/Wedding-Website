@@ -11,7 +11,7 @@ def test_admin_guest_view_default_guest(test_client, mongo_db):
     WHEN '/auth/guests/<guest_id>' is requested with 't_default's ID
     THEN check that 't_default's data is displayed
     """
-    assert log_in(test_client, username="t_admin")
+    log_in(test_client, username="t_admin")
     response = test_client.get(
         f"/admin/guest/{get_guest_id(mongo_db)}", follow_redirects=True
     )
