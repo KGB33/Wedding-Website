@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+
+{% block content %}
 <head>
     <meta charset="UTF-8">
     <title> {{ guest.username }}</title>
@@ -9,9 +10,9 @@
     <form ,action="" method="post">
         {{ form.hidden_tag() }}
         <ul>
-            <li>Name: {{ guest.name }}</li>
+            <li>Current Name: {{ guest.name }}</li>
             <p>
-                {{ form.name.label }}<br>
+                New {{ form.name.label }}<br>
                 {{ form.name(size=32) }}<br>
                 {% for error in form.name.errors %}
                 <span style="color: red;">[{{ error }}]</span>
@@ -19,9 +20,9 @@
             </p>
 
 
-            <li>Username: {{ guest.username }}</li>
+            <li>Current Username: {{ guest.username }}</li>
             <p>
-                {{ form.username.label }}<br>
+                New {{ form.username.label }}<br>
                 {{ form.username(size=32) }}<br>
                 {% for error in form.username.errors %}
                 <span style="color: red;">[{{ error }}]</span>
@@ -29,9 +30,9 @@
             </p>
 
 
-            <li>Email: {{ guest.email }}</li>
+            <li>Current Email: {{ guest.email }}</li>
             <p>
-                {{ form.email.label }}<br>
+                New {{ form.email.label }}<br>
                 {{ form.email(size=64) }}<br>
                 {% for error in form.email.errors %}
                 <span style="color: red;">[{{ error }}]</span>
@@ -86,3 +87,4 @@
 
 </body>
 </html>
+{% endblock %}

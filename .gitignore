@@ -12,3 +12,5 @@ __pycache__
 settings.json
 
 .gcloudignore
+
+.WeddingWebsite.egg-info

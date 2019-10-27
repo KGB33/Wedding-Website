@@ -72,15 +72,14 @@ def view_profile():
     """
     Route for viewing profile info
     """
-    return render_template("templates/guest.html", guest=current_user)
+    return render_template("guest.html", guest=current_user)
 
 
-@views.route("/edit_profile")
+@views.route("/edit_profile", methods=["GET", "POST"])
 @fresh_login_required
 def edit_profile():
-    # TODO: add tests
-    guest = GuestCollection().get_guest_by_id(current_user.id)
     form = EditForm()
+    guest = current_user
     if form.validate_on_submit():
         if form.username.data:
             guest.username = form.username.data
@@ -90,5 +89,6 @@ def edit_profile():
             guest.name = form.name.data
         if form.email.data:
             guest.email = form.email.data
-        guest.update_collection(mongo.db)
-        flash("Changes Saved")
+        guest.update_collection(mongo.db.guests)
+        return redirect(url_for('views.view_profile'))
+    return render_template('guest_edit.html', guest=current_user, form=form)
