@@ -1,7 +1,5 @@
-import hashlib
-from unittest import mock
-
 import pytest
+import werkzeug.security
 
 from WeddingWebsite import create_app
 from WeddingWebsite.auth import requires_roles, roles_cannot_access
@@ -45,9 +43,18 @@ def test_client():
 
     ctx.pop()
 
+@pytest.fixture(autouse=True)
+def mock_password_hash(monkeypatch, request):
+    if "no_mock_password_hash" in request.keywords:
+        pass
+    else:
+        def mock_hash(*args, **kwargs):
+            return "123456"
+        
+        monkeypatch.setattr(werkzeug.security, 'generate_password_hash', mock_hash)
 
 @pytest.fixture(autouse=True)
-def mongo_db(request, test_client):
+def mongo_db(request, test_client, mock_password_hash):
     if "no_mongo_db" in request.keywords:
         yield None
     else:
@@ -120,18 +127,7 @@ def log_in(app, username="t_default", password="123456"):
         raise LoginFailedError
 
 
-@pytest.fixture(autouse=True)
-def mock_hashlib_pbkdf2(request):
-    """
-    Mocks the built in method hashlib.pbkdf2 to decrease test runtime.
-    """
-    if "no_mock_hashlib_pbkdf2" in request.keywords:
-        yield None
-    else:
-        with mock.patch.object(
-            hashlib, "pbkdf2_hmac", return_value=b"123465"
-        ) as _mocked_hash:
-            yield _mocked_hash
+
 
 
 class LoginFailedError(Exception):
