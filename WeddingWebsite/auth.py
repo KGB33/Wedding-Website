@@ -19,6 +19,31 @@ auth = Blueprint(
     static_folder="static",
 )
 
+@auth.route('/refresh_login', methods=["GET", "POST"])
+def refresh_login():
+    if current_user:
+        logout_user()
+
+    form = LoginForm()
+    if form.validate_on_submit():
+        try:
+            guest = Guest(**mongo.db.guests.find_one({"username": form.username.data}))
+        except TypeError:
+            guest = None
+        if guest is None or not guest.check_password(form.password.data):
+            flash("Invalid username or password")
+            return redirect(url_for("auth.login"))
+        login_user(guest, remember=form.remember_me.data)
+
+        flash(f"Logged in {guest.name} successfully")
+
+        next_url = request.args.get("next")
+        if not next_url or url_parse(next_url).netloc != "":
+            next_url = url_for("views.index")
+        return redirect(next_url)
+    return render_template("login.html", form=form)
+
+
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
