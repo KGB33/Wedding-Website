@@ -4,7 +4,9 @@ import werkzeug.security
 from WeddingWebsite import create_app
 from WeddingWebsite.auth import requires_roles, roles_cannot_access
 from WeddingWebsite.config import TestingConfig
-from WeddingWebsite.models import Guest
+import WeddingWebsite.models
+
+Guest = WeddingWebsite.models.Guest
 
 
 @pytest.fixture
@@ -43,15 +45,18 @@ def test_client():
 
     ctx.pop()
 
+
 @pytest.fixture(autouse=True)
 def mock_password_hash(monkeypatch, request):
     if "no_mock_password_hash" in request.keywords:
         pass
     else:
+
         def mock_hash(*args, **kwargs):
             return "123456"
-        
-        monkeypatch.setattr(werkzeug.security, 'generate_password_hash', mock_hash)
+
+        # monkeypatch.setattr(WeddingWebsite.models, "generate_password_hash", mock_hash)
+
 
 @pytest.fixture(autouse=True)
 def mongo_db(request, test_client, mock_password_hash):
@@ -125,9 +130,6 @@ def log_in(app, username="t_default", password="123456"):
         pass
     else:
         raise LoginFailedError
-
-
-
 
 
 class LoginFailedError(Exception):

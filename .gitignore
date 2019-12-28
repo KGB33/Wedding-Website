@@ -1,7 +1,6 @@
 .idea
 secrets.py
 
-Pipfile
 Pipfile.lock
 
 .pytest_cache
@@ -14,3 +13,5 @@ settings.json
 .gcloudignore
 
 WeddingWebsite.egg-info
+
+.venv
