@@ -16,3 +16,4 @@ WeddingWebsite.egg-info
 
 .venv
 .env
+app.py
