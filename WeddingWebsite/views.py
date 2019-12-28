@@ -66,6 +66,12 @@ def photos():
     return render_template("photos.html")
 
 
+@views.route("/details")
+@login_required
+def details():
+    return render_template("details.html", guest=current_user)
+
+
 @views.route("/view_profile")
 @login_required
 def view_profile():
@@ -90,5 +96,5 @@ def edit_profile():
         if form.email.data:
             guest.email = form.email.data
         guest.update_collection(mongo.db.guests)
-        return redirect(url_for('views.view_profile'))
-    return render_template('guest_edit.html', guest=current_user, form=form)
+        return redirect(url_for("views.view_profile"))
+    return render_template("guest_edit.html", guest=current_user, form=form)

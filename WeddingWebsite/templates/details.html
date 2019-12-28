@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<!-- details.html -->
+
+<head>
+    <link href="static/base.css" rel="stylesheet" type="text/css">
+    <link href="static/location.css" rel="stylesheet" type="text/css">
+    <style>
+        .background {
+            background-image: url("static/images/flower_pic.png");
+            height: 2800px;
+        }
+
+        p {
+            margin-top: 10px;
+            margin-right: 30px;
+            margin-left: 30px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+
+<div class="background">
+    <div class='row'>
+        <div class="col">
+            <div class="block">
+                <h2>Details</h2>
+                {% if 'cabin_stayer' in guest.roles %}
+                <p>
+                    Please arrive on the afternoon of May 22nd and plan to stay in the Airbnb in Keystone. On the 23rd,
+                    we will be doing a walkthrough of the ceremony and beginning cooking for the next day. We will need
+                    help with the cooking so please mentally prepare yourself (looking at you, Shamik).
+                    <br><br>
+                    We are planning to take a hike up a fourtneer on the 23rd for a fun Colorado experience. Make sure
+                    to bring good hiking shoes and clothes you can walk in (with layers for cold weather). We would love
+                    for everyone to participate but will understand if you are unwilling or unable to.
+                    <br><br>
+                    Pictures will be taken beginning at 9 am on May 24rd so please be up, dressed and ready to go by
+                    8:45 am. Guests will arrive starting at 11 am and the ceremony will start at noon. The ceremony will
+                    be short and the reception will follow at 12:30. The reception will be fairly casual - buffet style
+                    food, board games, scattered tables, lots of mingling - and will end around 5 pm.
+                    <br><br>
+                    Pictures and the ceremony will be outdoors while the reception will be indoors. Please keep in mind
+                    that the weather will likely be in the 50s and there may be snow. Weather in Colorado is very
+                    unpredictable so be prepared for higher or lower temperatures as well. Wear layers and bring good
+                    winter clothes.
+                    <br><br>
+                    You are welcome to stay in the Airbnb the night of the 24th, and 25th as well. We will be doing
+                    cleanup on at least a few of those days and help would be appreciated. We would also love to just
+                    hangout and catch up for the next couple of days! Groomsmen will be having a LAN party one of the
+                    days following the wedding.
+                    <br><br>
+
+                </p>
+                {% else %}
+                <p>
+                    Please arrive at the cabin (21 Porcupine Lane) at 11 am on May 22nd. There will be snacks available
+                    for everyone until the ceremony begins at noon. The ceremony will be held outside (weather
+                    permitting) with unpredictable weather including possible rain or snow. Bring layers and warm
+                    clothes. The reception will begin at 12:30 and will be held in the cabin. Lunch, drinks (including
+                    alcohol) will be provided. Please make sure to fill out your dietary restrictions when you RSVP so
+                    we can have food for everyone. The reception will last until approximately 5 pm.
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

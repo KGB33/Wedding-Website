@@ -3,45 +3,51 @@
 
 {% block content %}
 <!-- Home.html -->
+
 <head>
-    <link href="static/base.css" rel="stylesheet" type="text/css">
-    <link href="static/home.css" rel="stylesheet" type="text/css">
+  <link href="static/base.css" rel="stylesheet" type="text/css">
+  <link href="static/home.css" rel="stylesheet" type="text/css">
 </head>
 
 <!-- The flexible grid (content) -->
-<div class = background>
-<div class="row">
+<div class=background>
+  <div class="row">
 
-  <div class="left">
+    <div class="left">
 
-    <div class="block">
+      <div class="block">
         <p><a href="{{ url_for('views.rsvp') }}">RSVP Here</a></p>
-    </div>
+      </div>
 
-    <div class="block">
+      <div class="block">
         <p><a href="{{ url_for('views.dress_code') }}">Dress Code</a></p>
-    </div>
+      </div>
 
-    <div class="block">
+      <div class="block">
         <p><a href="{{ url_for('views.registry') }}">Registry</a></p>
-    </div>
+      </div>
 
-  </div> <!-- end left col -->
+    </div> <!-- end left col -->
 
-  <div class="right">
+    <div class="right">
 
-    <div class="block">
+      <div class="block">
+        <p><a href="{{ url_for('views.details') }}">Details</a></p>
+      </div>
+
+
+      <div class="block">
         <p><a href="{{ url_for('views.location') }}">Location</a></p>
-    </div>
+      </div>
 
-    <div class="block">
+      <div class="block">
         <p><a href="{{ url_for('views.photos') }}">Photos</a></p>
-    </div>
+      </div>
 
 
 
-  </div> <!-- end right side -->
-</div>
+    </div> <!-- end right side -->
+  </div>
 </div>
 
 {% endblock %}
