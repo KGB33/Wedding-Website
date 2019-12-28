@@ -3,7 +3,12 @@ from flask import Blueprint, flash, redirect, render_template, url_for
 from WeddingWebsite.auth import requires_roles
 from WeddingWebsite.extensions import mongo
 from WeddingWebsite.forms import ConfirmActionForm, EditForm, SendMailForm
-from WeddingWebsite.mail import build_custom_email, build_rsvp_email, get_recipients
+from WeddingWebsite.mail import (
+    build_custom_email,
+    build_rsvp_email,
+    get_recipients,
+    send_mail_jet,
+)
 from WeddingWebsite.models import GuestCollection
 
 
@@ -57,7 +62,7 @@ def send_rsvp_reminder():
     form = ConfirmActionForm()
     if form.validate_on_submit():
         msg = build_rsvp_email()
-        response = send_email(msg)
+        response = send_mail_jet(msg)
         return response.json()
     return render_template("send_rsvp_reminder.html", form=form)
 
@@ -73,6 +78,6 @@ def send_email():
             recipient_roles=form.recipients.data,
         )
         msg = build_custom_email(form.subject.data, form.message.data, recipients)
-        response = send_email(msg)
+        response = send_mail_jet(msg)
         return response.json()
     return render_template("send_email.html", form=form)

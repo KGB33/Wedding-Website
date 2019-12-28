@@ -11,7 +11,7 @@ from WeddingWebsite.secrets import MJ_KEY, MJ_PASSWORD
 mail_jet = MJClient(auth=(MJ_KEY, MJ_PASSWORD), version="v3.1")
 
 
-def send_mail(msg):
+def send_mail_jet(msg):
     return mail_jet.send.create(data=msg.as_dict())
 
 
