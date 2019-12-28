@@ -1,11 +1,12 @@
-
 <html>
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <head>
-        <title>H & K Wedding</title>
-        <link href="../static/base.css" rel="stylesheet" type="text/css">
-    </head>
-    <body>
+
+<head>
+    <title>H & K Wedding</title>
+    <link href="../static/base.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
     <div class="nav_bar">
         <div>
             <a href="{{ url_for('views.index') }}">Home</a>
@@ -36,12 +37,12 @@
 
     <!-- Navigation Bar -->
     <div class="info-blab">
-      <p>When: May 24th. Where: Keystone, CO.</p>
+        <p>When: May 24th, 11am. Where: Keystone, CO.</p>
     </div>
 
 
-{% block content %}
-{% endblock %}
-    </body>
+    {% block content %}
+    {% endblock %}
+</body>
 
 </html>
