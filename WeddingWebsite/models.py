@@ -5,6 +5,8 @@ from flask_login import UserMixin
 from flask_pymongo import ObjectId
 from werkzeug.security import check_password_hash, generate_password_hash
 
+from WeddingWebsite.exceptions import TooManyMembersError
+
 
 @dataclass
 class Guest(UserMixin):
@@ -153,3 +155,49 @@ class GuestCollection:
         for guest in self.guests:
             result += f"\n\t{guest}"
         return result
+
+
+@dataclass
+class LFG:
+    creator: str
+    members: list
+    max_mebers: int
+    full: bool = False
+
+    def __post_init__(self):
+        if self.creator not in self.members:
+            self.members.append(self.creator)
+
+        self.check_full()
+
+    @property
+    def num_members(self):
+        return len(self.members)
+
+    def check_full(self):
+        if self.max_mebers == self.num_members:
+            self.full = True
+            return True
+        elif self.max_mebers < self.num_members:
+            raise TooManyMembersError
+        else:
+            self.full = False
+            return False
+
+    def add_member(self, member_name):
+        if self.num_members >= self.max_mebers:
+            raise TooManyMembersError
+
+        self.members.append(member_name)
+        self.check_full()
+
+    def remove_member(self, member_name):
+        self.members.remove(member_name)
+
+    def __str__(self):
+        return f"{self.num_members}/{self.max_mebers}, Created By: {self.creator}, Members: {self.members}"
+
+
+class Carpool(LFG):
+    def __str__(self):
+        return "Carpool: " * super().__str__()
