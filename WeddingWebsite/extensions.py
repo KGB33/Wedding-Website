@@ -8,5 +8,4 @@ mongo = PyMongo()
 # Create login manager
 login_manager = LoginManager()
 
-login_manager.refresh_view = 'auth.refresh_login'
-
+login_manager.refresh_view = "auth.refresh_login"
