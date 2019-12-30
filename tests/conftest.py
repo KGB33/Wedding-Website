@@ -4,9 +4,7 @@ import werkzeug.security
 from WeddingWebsite import create_app
 from WeddingWebsite.auth import requires_roles, roles_cannot_access
 from WeddingWebsite.config import TestingConfig
-import WeddingWebsite.models
-
-Guest = WeddingWebsite.models.Guest
+from WeddingWebsite.models import Guest, generate_password_hash
 
 
 @pytest.fixture
@@ -55,7 +53,7 @@ def mock_password_hash(monkeypatch, request):
         def mock_hash(*args, **kwargs):
             return "123456"
 
-        # monkeypatch.setattr(WeddingWebsite.models, "generate_password_hash", mock_hash)
+        monkeypatch.setattr(werkzeug.security, "generate_password_hash", mock_hash)
 
 
 @pytest.fixture(autouse=True)
@@ -134,3 +132,16 @@ def log_in(app, username="t_default", password="123456"):
 
 class LoginFailedError(Exception):
     pass
+
+
+def check_list_contents(l1, l2):
+    if len(l1) != len(l2):
+        return False
+
+    for e in l1:
+        if e in l2:
+            l2.remove(e)
+        else:
+            return False
+
+    return True
