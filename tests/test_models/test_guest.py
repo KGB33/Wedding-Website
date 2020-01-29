@@ -18,7 +18,7 @@ def test_init_guest(template_user):
     """
     assert template_user.id == 0
     assert template_user.username == "t_template_user"
-    assert check_password_hash(template_user.password, "123456")
+    assert template_user.password == "123456"
     assert template_user.name == "t_template_user"
     assert template_user.email == "t_template_user@test.org"
     assert template_user.roles == []
@@ -26,7 +26,7 @@ def test_init_guest(template_user):
 
 
 @pytest.mark.no_mongo_db
-@pytest.mark.no_mock_hashlib_pbkdf2
+@pytest.mark.no_mock_password_hash
 def test_guest_check_password_change(template_user):
     """
     GIVEN a Guest model
