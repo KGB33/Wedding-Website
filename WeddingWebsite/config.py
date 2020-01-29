@@ -1,4 +1,11 @@
-from WeddingWebsite.secrets import DB_HOST, FLASK_SECRET_KEY
+import os
+
+
+if not (DB_HOST := os.getenv("DB_HOST")):
+    raise OSError("DB_HOST URL not in .env")
+
+if not (FLASK_SECRET_KEY := os.getenv("FLASK_SECRET_KEY")):
+    raise OSError("FLASK_SECRET_KEY not in .env")
 
 
 class BaseConfig:
