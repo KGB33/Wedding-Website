@@ -1,5 +1,7 @@
 import random
 from dataclasses import asdict, dataclass, field
+from enum import Enum
+from typing import Literal
 
 from flask_login import UserMixin
 from flask_pymongo import ObjectId
@@ -153,3 +155,46 @@ class GuestCollection:
         for guest in self.guests:
             result += f"\n\t{guest}"
         return result
+
+@dataclass
+class LFG:
+    owner: str
+    members: list
+    max_members: int
+    info: str
+    group_type: Literal["CARPOOL", "HOTEL"]
+    _id: ObjectId = None
+
+
+
+    def __post_init__(self):
+        self.full # Checks if too many members were passed into init
+
+    @property
+    def full(self):
+        if self.total_members < self.max_members:
+            return False
+        elif self.total_members == self.max_members:
+            return True
+        elif self.total_members > self.max_members:
+            raise ValueError(f"LFG has more members than allowed!")
+
+    @property
+    def total_members(self):
+        return 1 + len(self.members) # Owner + Members
+
+    def __str__(self):
+        return f"LFG is owned by {self.owner} and has {self.total_members}/{self.max_members} members"
+
+    def add_to_collection(self, collection):
+        lfg_to_add = asdict(self)
+        del lfg_to_add["_id"]
+        result = collection.insert_one(lfg_to_add)
+        self._id = result.inserted_id
+        return result
+
+    def update_collection(self, collection):
+        result = collection.update_one({"_id": self._id}, {"$set": asdict(self)})
+        if result.modified_count != 1:
+            return False
+        return True
