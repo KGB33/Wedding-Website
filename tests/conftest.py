@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import patch
 import werkzeug.security
 
 from WeddingWebsite import create_app
@@ -55,7 +56,7 @@ def mock_password_hash(monkeypatch, request):
         def mock_hash(*args, **kwargs):
             return "123456"
 
-        # monkeypatch.setattr(WeddingWebsite.models, "generate_password_hash", mock_hash)
+        monkeypatch.setattr(WeddingWebsite.models, "generate_password_hash", mock_hash)
 
 
 @pytest.fixture(autouse=True)
@@ -120,12 +121,18 @@ def mongo_db(request, test_client, mock_password_hash):
         mongo.db.guests.drop()
 
 
+def mock_hash(*args, **kwargs):
+            return "123456"
+
+
 def log_in(app, username="t_default", password="123456"):
-    response = app.post(
-        "/auth/login",
-        data={"username": username, "password": password},
-        follow_redirects=True,
-    )
+
+    with patch("WeddingWebsite.models.check_password_hash", return_value='123456'):
+        response = app.post(
+            "/auth/login",
+            data={"username": username, "password": password},
+            follow_redirects=True,
+        )
     if b"Logged in" in response.data:
         pass
     else:
