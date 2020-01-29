@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Join LFG</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <h3>Please enter the best way for the Owner of the LFG to contact you.</h3>
+        <p>
+            {{ form.contact_info.label }}<br>
+            {{ form.contact_info(size=32) }}<br>
+            {% for error in form.contact_info.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

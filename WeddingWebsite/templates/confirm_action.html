@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+        <link href="static/rsvp.css" rel="stylesheet" type="text/css">
+</head>
+
+<div class="background">
+        <h1>Please Confirm {{ action }}</h1>
+        <form action="" method="post">
+                {{ form.csrf_token }}
+
+                {{ form.submit() }}
+
+        </form>
+</div>
+
+{% endblock %}

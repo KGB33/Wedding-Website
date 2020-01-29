@@ -156,19 +156,19 @@ class GuestCollection:
             result += f"\n\t{guest}"
         return result
 
+
 @dataclass
 class LFG:
-    owner: str
-    members: list
+    owner_id: str
+    owner_name: str
+    members: dict  # {member_id: member_contact_info}
     max_members: int
     info: str
     group_type: Literal["CARPOOL", "HOTEL"]
     _id: ObjectId = None
 
-
-
     def __post_init__(self):
-        self.full # Checks if too many members were passed into init
+        self.full  # Checks if too many members were passed into init
 
     @property
     def full(self):
@@ -181,10 +181,10 @@ class LFG:
 
     @property
     def total_members(self):
-        return 1 + len(self.members) # Owner + Members
+        return 1 + len(self.members)  # Owner + Members
 
     def __str__(self):
-        return f"LFG is owned by {self.owner} and has {self.total_members}/{self.max_members} members"
+        return f"LFG is owned by {self.owner_name} and has {self.total_members}/{self.max_members} members"
 
     def add_to_collection(self, collection):
         lfg_to_add = asdict(self)
@@ -198,3 +198,40 @@ class LFG:
         if result.modified_count != 1:
             return False
         return True
+
+    def add_member(self, member_id, member_name):
+        self.members.update({member_id: member_name})
+        self.full
+
+    def remove_member(self, member_id):
+        del self.members[member_id]
+        self.full
+
+
+class LFGCollection:
+    def __init__(self, collection):
+        self.lfgs = [LFG(**x) for x in collection.find({})]
+
+    def get_lfg_by_id(self, _id):
+        for lfg in self.lfgs:
+            if lfg.id == ObjectId(_id):
+                return lfg
+        return None
+
+    def get_lfg_by_username(self, username):
+        for lfg in self.lfgs:
+            if lfg.username == username:
+                return lfg
+        return None
+
+    def __len__(self):
+        return len(self.lfgs)
+
+    def __getitem__(self, index):
+        return self.lfgs[index]
+
+    def __str__(self):
+        result = "lfgs in collection:"
+        for lfg in self.lfgs:
+            result += f"\n\t{lfg}"
+        return result
