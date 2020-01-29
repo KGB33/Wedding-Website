@@ -12,6 +12,8 @@ settings.json
 
 WeddingWebsite.egg-info
 
+app.yaml
+
 .venv
 .env
 app.py
