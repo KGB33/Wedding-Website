@@ -4,9 +4,10 @@ from flask import Flask
 
 from WeddingWebsite.extensions import login_manager, mongo
 from WeddingWebsite.secrets import DB_HOST, DB_NAME, FLASK_SECRET_KEY
+from WeddingWebsite.config import TestingConfig
 
 
-def create_app(config):
+def create_app(config=TestingConfig):
     """ Flask application factory """
 
     # Setup Flask and load app.config
