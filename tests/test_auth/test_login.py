@@ -8,7 +8,7 @@ def test_valid_login(test_client):
     WHEN the '/login' page is posted (w/ valid data)
     THEN check if the response is valid
     """
-    with patch("WeddingWebsite.models.check_password_hash", return_value='123456'):
+    with patch("WeddingWebsite.models.check_password_hash", return_value="123456"):
         response = test_client.post(
             "/auth/login",
             data={"username": "t_default", "password": "123456"},

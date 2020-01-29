@@ -122,12 +122,12 @@ def mongo_db(request, test_client, mock_password_hash):
 
 
 def mock_hash(*args, **kwargs):
-            return "123456"
+    return "123456"
 
 
 def log_in(app, username="t_default", password="123456"):
 
-    with patch("WeddingWebsite.models.check_password_hash", return_value='123456'):
+    with patch("WeddingWebsite.models.check_password_hash", return_value="123456"):
         response = app.post(
             "/auth/login",
             data={"username": username, "password": password},

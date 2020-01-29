@@ -19,7 +19,8 @@ auth = Blueprint(
     static_folder="static",
 )
 
-@auth.route('/refresh_login', methods=["GET", "POST"])
+
+@auth.route("/refresh_login", methods=["GET", "POST"])
 def refresh_login():
     if current_user:
         logout_user()
@@ -42,7 +43,6 @@ def refresh_login():
             next_url = url_for("views.index")
         return redirect(next_url)
     return render_template("login.html", form=form)
-
 
 
 @auth.route("/login", methods=["GET", "POST"])
