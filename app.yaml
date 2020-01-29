@@ -1,4 +1,0 @@
-runtime: python38
-
-env_variables:
-  FLASK_APP: "WeddingWebsite"
