@@ -4,9 +4,21 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pytest = "*"
+black = "*"
+mongomock = "*"
 
 [packages]
 python-dotenv = "*"
+flask = "*"
+flask-pymongo = "*"
+mailjet-rest = "*"
+flask-login = "*"
+flask-wtf = "*"
+weddingwebsite = {editable = true,path = "."}
 
 [requires]
 python_version = "3.8"
+
+[pipenv]
+allow_prereleases = true
