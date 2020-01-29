@@ -5,13 +5,27 @@ from WeddingWebsite.models import LFG
 
 @pytest.fixture
 def lfg():
-    return LFG("Owner_id", "Owner_name", ["Member1", "Member2", "Member3"], 6, "Info Blob", "HOTEL")
+    return LFG(
+        "Owner_id",
+        "Owner_name",
+        ["Member1", "Member2", "Member3"],
+        6,
+        "Info Blob",
+        "HOTEL",
+    )
 
 
 @pytest.mark.no_mongo_db
 class TestInit:
     def test_valid_init(self):
-        lfg = LFG("Owner_id", "Owner_name", ["Member1", "Member2", "Member3"], 6, "Info Blob", "HOTEL")
+        lfg = LFG(
+            "Owner_id",
+            "Owner_name",
+            ["Member1", "Member2", "Member3"],
+            6,
+            "Info Blob",
+            "HOTEL",
+        )
         assert lfg.owner_id == "Owner_id"
         assert lfg.owner_name == "Owner_name"
         assert lfg.members == ["Member1", "Member2", "Member3"]
@@ -22,7 +36,12 @@ class TestInit:
     def test_too_many_members(self):
         with pytest.raises(ValueError) as excinfo:
             lfg = LFG(
-                "Owner", "Owner name", ["Member1", "Member2", "Member3"], 2, "Info Blob", "HOTEL"
+                "Owner",
+                "Owner name",
+                ["Member1", "Member2", "Member3"],
+                2,
+                "Info Blob",
+                "HOTEL",
             )
         assert f"LFG has more members than allowed!" == str(excinfo.value)
 
