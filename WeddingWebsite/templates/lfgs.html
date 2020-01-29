@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<!-- lfgs.html -->
+
+
+<h1>The Looking For Group Page</h1>
+<a href="{{ url_for('views.create_lfg') }}">Create New LFG</a>
+
+<div role="tabpanel">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist" id="NavTabs">
+      <li role="presentation" class="active"><a href="#Carpool" aria-controls="Carpool" role="tab" data-toggle="tab">Carpool</a></li>
+      <li role="presentation"><a href="#hotel" aria-controls="hotel" role="tab" data-toggle="tab">Hotel</a></li>
+  
+    </ul>
+  
+    <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="Carpool">
+        <ul>
+            {% for lfg in lfgs if lfg.group_type == "CARPOOL" %}
+                <div id='lfg'>
+                    <h3>{{ lfg.info }}</h3> 
+                    <h6>Owner: {{ lfg.owner_name }}</h6>
+                    <p>This LFG has {{ lfg.total_members }} out of {{ lfg.max_members }} members</p>
+                    {% if lfg.owner_id == current_user.id %}
+                        <h6>YOU are the owner of this LFG, YOU are resposeable for contating the other group members.</h6>
+                        <ul>
+                                {% for id, contact_info in lfg.members.items() %}
+                                    <li>{{ contact_info }}</li>
+                                {% endfor %}
+                        </ul>
+                        <a href="{{ url_for('views.edit_lfg', lfg_id=lfg._id) }}">Edit LFG</a>
+                        <a href="{{ url_for('views.delete_lfg', lfg_id=lfg._id) }}">Delete LFG</a>
+
+                    {% elif is_in_lfg(lfg, current_user) %}
+                        <a href="{{ url_for('views.leave_lfg', lfg_id=lfg._id) }}">Leave LFG</a>
+                    {% elif not lfg.full %}
+                        <a href="{{ url_for('views.join_lfg', lfg_id=lfg._id) }}">Join LFG</a>
+                    
+                            
+                        
+                    {% endif %}
+                </div>
+            {% else %}
+                <p>No Carpool LFGs at the moment</p>
+            {% endfor %}
+        </ul>
+
+    </div>
+    
+    <div role="tabpanel" class="tab-pane fade" id="hotel">
+        <ul>
+            {% for lfg in lfgs if lfg.group_type == "HOTEL" %}
+            <div id='lfg'>
+                <h3>{{ lfg.info }}</h3> 
+                <p>This LFG has {{ lfg.total_members }} out of {{ lfg.max_members }} members</p>
+                {% if lfg.owner_id == current_user.id %}
+                    <a href="{{ url_for('views.edit_lfg', lfg_id=lfg._id) }}">Edit LFG</a>
+                {% elif current_user._id in lfg.members %}
+                    <a href="{{ url_for('views.leave_lfg', lfg_id=lfg._id) }}">Leave LFG</a>
+                {% else %}
+                    <a href="{{ url_for('views.join_lfg', lfg_id=lfg._id) }}">Join LFG</a>
+                {% endif %}
+            </div>
+            {% else %}
+                <p>No Hotel LFGs at the moment</p>
+            {% endfor %}
+        </ul>
+    </div>
+  
+  </div>
+
+{% endblock %}

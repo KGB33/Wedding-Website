@@ -119,6 +119,7 @@ def mongo_db(request, test_client, mock_password_hash):
         yield mongo.db
 
         mongo.db.guests.drop()
+        mongo.db.lfgs.drop()
 
 
 def mock_hash(*args, **kwargs):
