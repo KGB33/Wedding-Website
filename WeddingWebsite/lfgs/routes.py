@@ -81,7 +81,7 @@ def create_lfg():
             info=form.info.data,
             group_type=form.group_type.data,
         )
-        lfg.add_to_collection(mongo.db.lfgs)  
+        lfg.add_to_collection(mongo.db.lfgs)
         return redirect(url_for("lfgs.index"))
     return render_template("create_lfg.html", form=form)
 
