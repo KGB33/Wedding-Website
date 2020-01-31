@@ -49,7 +49,9 @@ def register_blueprints(app):
     from . import views
     from WeddingWebsite import admin
     from WeddingWebsite import auth
+    from WeddingWebsite.lfgs import bp as lfgs_bp
 
     app.register_blueprint(views.views)
     app.register_blueprint(auth.auth)
     app.register_blueprint(admin.admin)
+    app.register_blueprint(lfgs_bp)

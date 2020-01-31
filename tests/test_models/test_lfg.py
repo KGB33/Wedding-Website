@@ -1,6 +1,6 @@
 import pytest
 
-from WeddingWebsite.models import LFG
+from WeddingWebsite.lfgs.models import LFG
 
 
 @pytest.fixture
