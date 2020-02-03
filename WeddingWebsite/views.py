@@ -72,12 +72,3 @@ def photos():
 @login_required
 def details():
     return render_template("details.html", guest=current_user)
-
-
-@views.route("/view_profile")
-@login_required
-def view_profile():
-    """
-    Route for viewing profile info
-    """
-    return render_template("guest.html", guest=current_user)

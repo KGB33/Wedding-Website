@@ -1,11 +1,17 @@
 from flask import flash, redirect, render_template, request, url_for
-from flask_login import current_user, login_user, logout_user, fresh_login_required
+from flask_login import (
+    current_user,
+    login_user,
+    logout_user,
+    fresh_login_required,
+    login_required,
+)
 from werkzeug.urls import url_parse
 
 from WeddingWebsite import login_manager
 from WeddingWebsite.auth.exceptions import NoRolesProvided
 from WeddingWebsite.extensions import mongo
-from WeddingWebsite.auth.forms import LoginForm, RegistrationForm
+from WeddingWebsite.auth.forms import LoginForm, EditForm, RegistrationForm
 from WeddingWebsite.models import Guest
 from WeddingWebsite.auth import auth
 
@@ -91,6 +97,15 @@ def register():
     return render_template("register.html", title="Register", form=form)
 
 
+@auth.route("/view_profile")
+@login_required
+def view_profile():
+    """
+    Route for viewing profile info
+    """
+    return render_template("guest.html", guest=current_user)
+
+
 @auth.route("/edit_profile", methods=["GET", "POST"])
 @fresh_login_required
 def edit_profile():
@@ -106,7 +121,7 @@ def edit_profile():
         if form.email.data:
             guest.email = form.email.data
         guest.update_collection(mongo.db.guests)
-        return redirect(url_for("views.view_profile"))
+        return redirect(url_for("auth.view_profile"))
     return render_template("guest_edit.html", guest=current_user, form=form)
 
 

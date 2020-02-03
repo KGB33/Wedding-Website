@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- guest_edit.html -->
 <head>
     <meta charset="UTF-8">
     <title> {{ guest.username }}</title>
@@ -39,7 +40,7 @@
                 {% endfor %}
             </p>
 
-            <li>Password:</li>
+            <li>Change Password</li>
             <p>
                 {{ form.password.label }}<br>
                 {{ form.password(size=32) }}<br>
