@@ -49,10 +49,17 @@ class TestLoggedInUser:
 
     def test_submit_page_change_all(self, test_client, mongo_db):
         log_in(test_client)
-        user_id = mongo_db.guests.find_one({'name': 't_default'})['_id']
-        response = test_client.post("/auth/edit_profile", data={'username': 'new_username', 'name': 'new_name', 'email': 'new_email@email.org'})
-        assert response.status_code == 302 # Redirected
+        user_id = mongo_db.guests.find_one({"name": "t_default"})["_id"]
+        response = test_client.post(
+            "/auth/edit_profile",
+            data={
+                "username": "new_username",
+                "name": "new_name",
+                "email": "new_email@email.org",
+            },
+        )
+        assert response.status_code == 302  # Redirected
         user = mongo_db.guests.find_one({"_id": user_id})
-        assert user['name'] == 'new_name'
-        assert user["username"] == 'new_username'
-        assert user["email"] == 'new_email@email.org'
+        assert user["name"] == "new_name"
+        assert user["username"] == "new_username"
+        assert user["email"] == "new_email@email.org"
