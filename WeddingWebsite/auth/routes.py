@@ -1,23 +1,19 @@
-from functools import wraps
-
-from flask import Blueprint, flash, redirect, render_template, request, url_for
-from flask_login import current_user, login_user, logout_user
+from flask import flash, redirect, render_template, request, url_for
+from flask_login import (
+    current_user,
+    login_user,
+    logout_user,
+    fresh_login_required,
+    login_required,
+)
 from werkzeug.urls import url_parse
 
 from WeddingWebsite import login_manager
-from WeddingWebsite.exceptions import NoRolesProvided
+from WeddingWebsite.auth.exceptions import NoRolesProvided
 from WeddingWebsite.extensions import mongo
-from WeddingWebsite.forms import LoginForm, RegistrationForm
+from WeddingWebsite.auth.forms import LoginForm, EditForm, RegistrationForm
 from WeddingWebsite.models import Guest
-
-
-auth = Blueprint(
-    "auth",
-    __name__,
-    url_prefix="/auth",
-    template_folder="templates",
-    static_folder="static",
-)
+from WeddingWebsite.auth import auth
 
 
 @auth.route("/refresh_login", methods=["GET", "POST"])
@@ -101,72 +97,34 @@ def register():
     return render_template("register.html", title="Register", form=form)
 
 
+@auth.route("/view_profile")
+@login_required
+def view_profile():
+    """
+    Route for viewing profile info
+    """
+    return render_template("guest.html", guest=current_user)
+
+
+@auth.route("/edit_profile", methods=["GET", "POST"])
+@fresh_login_required
+def edit_profile():
+    form = EditForm()
+    guest = current_user
+    if form.validate_on_submit():
+        if form.username.data:
+            guest.username = form.username.data
+        if form.password.data:
+            guest.password = form.password.data
+        if form.name.data:
+            guest.name = form.name.data
+        if form.email.data:
+            guest.email = form.email.data
+        guest.update_collection(mongo.db.guests)
+        return redirect(url_for("auth.view_profile"))
+    return render_template("guest_edit.html", guest=current_user, form=form)
+
+
 @auth.route("/unauthorized_role")
 def unauthorized_role():
     return "You are seeing this page because you lack the required roles to view your requested page."
-
-
-def requires_roles(*roles):
-    """
-    Implements role biased authentication over Flask-login
-
-    :param roles: Required Roles for authentication
-    """
-
-    def wrapper(func):
-        @wraps(func)
-        def decorated_view(*args, **kwargs):
-
-            if not roles:
-                raise NoRolesProvided(
-                    "No Roles provided, Please use @login_required instead"
-                )
-
-            if not current_user.is_authenticated:
-                return login_manager.unauthorized()
-
-            if current_user.roles is None:
-                return redirect(url_for("auth.unauthorized_role"))
-
-            for role in roles:
-                if role not in current_user.roles:
-                    return redirect(url_for("auth.unauthorized_role"))
-            return func(*args, **kwargs)
-
-        return decorated_view
-
-    return wrapper
-
-
-def roles_cannot_access(*roles):
-    """
-    Implements role biased authentication over Flask-login
-
-    Users with the provided roles CANNOT access the route.
-
-    :param roles: Required Roles for authentication
-    """
-
-    def wrapper(func):
-        @wraps(func)
-        def decorated_view(*args, **kwargs):
-
-            if not roles:
-                raise NoRolesProvided(
-                    "No Roles provided, Please use @login_required instead"
-                )
-
-            if not current_user.is_authenticated:
-                return login_manager.unauthorized()
-
-            if current_user.roles is None:
-                return func(*args, **kwargs)
-
-            for role in roles:
-                if role in current_user.roles:
-                    return redirect(url_for("auth.unauthorized_role"))
-            return func(*args, **kwargs)
-
-        return decorated_view
-
-    return wrapper

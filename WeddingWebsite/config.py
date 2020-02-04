@@ -32,4 +32,4 @@ class TestingConfig(BaseConfig):
 
 
 class ProductionConfig(BaseConfig):
-    MONGO_URI  = f"mongodb+srv://{DB_USER}:{DB_PASSWORD}@{DB_NAME}-pylxy.mongodb.net/{DB_NAMESPACE}?retryWrites=true&w=majority"
+    MONGO_URI = f"mongodb+srv://{DB_USER}:{DB_PASSWORD}@{DB_NAME}-pylxy.mongodb.net/{DB_NAMESPACE}?retryWrites=true&w=majority"

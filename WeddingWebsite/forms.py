@@ -25,54 +25,6 @@ class MultiCheckboxField(SelectMultipleField):
     option_widget = widgets.CheckboxInput()
 
 
-class LoginForm(FlaskForm):
-    username = StringField("Username")
-    password = PasswordField("Password")
-    submit = SubmitField("Submit")
-    remember_me = BooleanField("Remember Me")
-
-
-class RegistrationForm(FlaskForm):
-    name = StringField("Name", validators=[DataRequired()])
-    username = StringField("Username", validators=[DataRequired()])
-    password = PasswordField("Password", validators=[DataRequired()])
-    password2 = PasswordField(
-        "Repeat Password", validators=[DataRequired(), EqualTo("password")]
-    )
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    code = StringField("If there is a code on your invite enter it here.")
-    submit = SubmitField("Register")
-
-    def validate_username(self, username):
-        user = mongo.db.guests.find_one({"username": username.data})
-        if user is not None:
-            raise ValidationError("Please use a different username.")
-
-    def validate_email(self, email):
-        user = mongo.db.guests.find_one({"email": email.data})
-        if user is not None:
-            raise ValidationError("Please use a different email address.")
-
-
-class EditForm(FlaskForm):
-    name = StringField("Name")
-    username = StringField("Username")
-    password = PasswordField("Password")
-    password2 = PasswordField("Repeat Password", validators=[EqualTo("password")])
-    email = StringField("Email")
-    submit = SubmitField("Update Info")
-
-    def validate_username(self, username):
-        user = mongo.db.guests.find_one({"username": username.data})
-        if user is not None:
-            raise ValidationError("Please use a different username.")
-
-    def validate_email(self, email):
-        user = mongo.db.guests.find_one({"email": email.data})
-        if user is not None:
-            raise ValidationError("Please use a different email address.")
-
-
 class RSVPForm(FlaskForm):
     status_choices = ["yes", "no", "undecided"]
     diet_choices = [
@@ -118,37 +70,3 @@ class SendMailForm(FlaskForm):
 
 class ConfirmActionForm(FlaskForm):
     submit = SubmitField("Confirm Action!")
-
-
-class CreateLFGForm(FlaskForm):
-    max_members = IntegerField(
-        "Max Members (including yourself)", validators=[InputRequired()]
-    )
-    info = StringField(
-        "Information that group members will need to know.",
-        validators=[InputRequired()],
-    )
-    group_type = RadioField(
-        "LFG Type",
-        choices=[("CARPOOL", "Carpool"), ("HOTEL", "hotel")],
-        validators=[InputRequired()],
-    )
-
-    submit = SubmitField("Create LFG!")
-
-
-class EditLFGForm(FlaskForm):
-    max_members = IntegerField("Max Members (including yourself)")
-    info = StringField("Information that group members will need to know.",)
-    group_type = RadioField(
-        "LFG Type", choices=[("CARPOOL", "Carpool"), ("HOTEL", "hotel")],
-    )
-
-    submit = SubmitField("Make Changes!")
-
-
-class ContactInfoForm(FlaskForm):
-    contact_info = StringField(
-        "Please enter your contact information.", validators=[InputRequired()]
-    )
-    submit = SubmitField("Join LFG!")

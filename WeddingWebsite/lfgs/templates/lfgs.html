@@ -6,7 +6,7 @@
 
 
 <h1>The Looking For Group Page</h1>
-<a href="{{ url_for('views.create_lfg') }}">Create New LFG</a>
+<a href="{{ url_for('lfgs.create_lfg') }}">Create New LFG</a>
 
 <div role="tabpanel">
 
@@ -33,13 +33,13 @@
                                     <li>{{ contact_info }}</li>
                                 {% endfor %}
                         </ul>
-                        <a href="{{ url_for('views.edit_lfg', lfg_id=lfg._id) }}">Edit LFG</a>
-                        <a href="{{ url_for('views.delete_lfg', lfg_id=lfg._id) }}">Delete LFG</a>
+                        <a href="{{ url_for('lfgs.edit_lfg', lfg_id=lfg._id) }}">Edit LFG</a>
+                        <a href="{{ url_for('lfgs.delete_lfg', lfg_id=lfg._id) }}">Delete LFG</a>
 
                     {% elif is_in_lfg(lfg, current_user) %}
-                        <a href="{{ url_for('views.leave_lfg', lfg_id=lfg._id) }}">Leave LFG</a>
+                        <a href="{{ url_for('lfgs.leave_lfg', lfg_id=lfg._id) }}">Leave LFG</a>
                     {% elif not lfg.full %}
-                        <a href="{{ url_for('views.join_lfg', lfg_id=lfg._id) }}">Join LFG</a>
+                        <a href="{{ url_for('lfgs.join_lfg', lfg_id=lfg._id) }}">Join LFG</a>
                     
                             
                         
@@ -66,13 +66,13 @@
                                 <li>{{ contact_info }}</li>
                             {% endfor %}
                     </ul>
-                    <a href="{{ url_for('views.edit_lfg', lfg_id=lfg._id) }}">Edit LFG</a>
-                    <a href="{{ url_for('views.delete_lfg', lfg_id=lfg._id) }}">Delete LFG</a>
+                    <a href="{{ url_for('lfgs.edit_lfg', lfg_id=lfg._id) }}">Edit LFG</a>
+                    <a href="{{ url_for('lfgs.delete_lfg', lfg_id=lfg._id) }}">Delete LFG</a>
 
                 {% elif is_in_lfg(lfg, current_user) %}
-                    <a href="{{ url_for('views.leave_lfg', lfg_id=lfg._id) }}">Leave LFG</a>
+                    <a href="{{ url_for('lfgs.leave_lfg', lfg_id=lfg._id) }}">Leave LFG</a>
                 {% elif not lfg.full %}
-                    <a href="{{ url_for('views.join_lfg', lfg_id=lfg._id) }}">Join LFG</a>
+                    <a href="{{ url_for('lfgs.join_lfg', lfg_id=lfg._id) }}">Join LFG</a>
                 
                         
                     
