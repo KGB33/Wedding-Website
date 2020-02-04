@@ -24,6 +24,8 @@ A custom website to help facilitate invitations, registry, and photos for my wed
     * Admins can send RSVP reminder E-mails as well as custom E-mails to any subset of users.
  * RSVP Form
     * Users can submit (and resubmit) their RSVP at any time.
+ * LFG Pages
+    * Looking For Group funtionality for Carpooling and Hotel Rooms.
     
    
 ### Notes
