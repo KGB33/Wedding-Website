@@ -3,7 +3,7 @@ from unittest.mock import patch
 import werkzeug.security
 
 from WeddingWebsite import create_app
-from WeddingWebsite.auth import requires_roles, roles_cannot_access
+from WeddingWebsite.auth.utils import requires_roles, roles_cannot_access
 from WeddingWebsite.config import TestingConfig
 import WeddingWebsite.models
 

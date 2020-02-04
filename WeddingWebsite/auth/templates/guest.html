@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- guest.html -->
 <head>
     <meta charset="UTF-8">
     <title> {{ guest.username }} </title>
@@ -34,7 +35,7 @@
         </li>
     </ul>
 
-    <a href="{{ url_for('views.edit_profile') }}">Edit</a>
+    <a href="{{ url_for('auth.edit_profile') }}">Edit</a>
 
 </body>
 </html>

@@ -1,11 +1,11 @@
 from flask import Blueprint
 
-bp = Blueprint(
-    "lfgs",
+admin = Blueprint(
+    "admin",
     __name__,
-    url_prefix="/lfgs",
+    url_prefix="/admin",
     template_folder="templates",
     static_folder="static",
 )
 
-from WeddingWebsite.lfgs import routes
+from WeddingWebsite.admin import routes

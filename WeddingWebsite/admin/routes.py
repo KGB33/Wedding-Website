@@ -1,8 +1,9 @@
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, url_for
 
-from WeddingWebsite.auth import requires_roles
+from WeddingWebsite.auth.utils import requires_roles
 from WeddingWebsite.extensions import mongo
-from WeddingWebsite.forms import ConfirmActionForm, EditForm, SendMailForm
+from WeddingWebsite.forms import ConfirmActionForm, SendMailForm
+from WeddingWebsite.auth.forms import EditForm
 from WeddingWebsite.mail import (
     build_custom_email,
     build_rsvp_email,
@@ -10,15 +11,7 @@ from WeddingWebsite.mail import (
     send_mail_jet,
 )
 from WeddingWebsite.models import GuestCollection
-
-
-admin = Blueprint(
-    "admin",
-    __name__,
-    url_prefix="/admin",
-    template_folder="templates",
-    static_folder="static",
-)
+from WeddingWebsite.admin import admin
 
 
 @admin.route("/")
