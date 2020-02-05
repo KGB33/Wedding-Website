@@ -92,7 +92,7 @@ class Message:
                     "Subject": self.subject,
                     "TextPart": self.text_part,
                     "HtmlPart": self.html_part,
-                    "To": [asdict(r) for r in self.recipients],
+                    "Bcc": [asdict(r) for r in self.recipients],
                 }
             ]
         }
