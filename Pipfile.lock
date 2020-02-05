@@ -84,10 +84,10 @@
         },
         "jinja2": {
             "hashes": [
-                "sha256:6e7a3c2934694d59ad334c93dd1b6c96699cf24c53fdb8ec848ac6b23e685734",
-                "sha256:d6609ae5ec3d56212ca7d802eda654eaf2310000816ce815361041465b108be4"
+                "sha256:93187ffbc7808079673ef52771baa950426fd664d3aad1d0fa3e95644360e250",
+                "sha256:b0eaf100007721b5c16c1fc1eecb87409464edc10469ddc9a22a27a99123be49"
             ],
-            "version": "==2.11.0"
+            "version": "==2.11.1"
         },
         "mailjet-rest": {
             "hashes": [
@@ -221,10 +221,10 @@
         },
         "werkzeug": {
             "hashes": [
-                "sha256:1e0dedc2acb1f46827daa2e399c1485c8fa17c0d8e70b6b875b4e7f54bf408d2",
-                "sha256:b353856d37dec59d6511359f97f6a4b2468442e454bd1c98298ddce53cac1f04"
+                "sha256:7f91416b2e6902e39190552d5e05bc94c0d5034688753fceb28eaa9d16795027",
+                "sha256:834e6f4828864350b7c173a2be027f0a692512bbe9d7ddd52da8e29ff991a726"
             ],
-            "version": "==0.16.1"
+            "version": "==1.0.0rc1"
         },
         "wtforms": {
             "hashes": [
@@ -282,11 +282,11 @@
         },
         "mongomock": {
             "hashes": [
-                "sha256:1d29e2705bd2adffca0ba5dd59c9b988337323fc65a7545f7576b5abdb9e89d6",
-                "sha256:bc21a7e04000ad66b2a9b2076f8713ac3bb30efa34569fd094390c54bff65dfa"
+                "sha256:36aad3c6127eee9cdb52ac0186c6a60007f2412c9db715645eeccffc1258ce48",
+                "sha256:8faaffd875732bf55e38e1420a1b7212dde8d446c5852afb4c0884c1369b328b"
             ],
             "index": "pypi",
-            "version": "==3.18.0"
+            "version": "==3.19.0"
         },
         "more-itertools": {
             "hashes": [
@@ -332,11 +332,11 @@
         },
         "pytest": {
             "hashes": [
-                "sha256:1d122e8be54d1a709e56f82e2d85dcba3018313d64647f38a91aec88c239b600",
-                "sha256:c13d1943c63e599b98cf118fcb9703e4d7bde7caa9a432567bcdcae4bf512d20"
+                "sha256:0d5fe9189a148acc3c3eb2ac8e1ac0742cb7618c084f3d228baaec0c254b318d",
+                "sha256:ff615c761e25eb25df19edddc0b970302d2a9091fbce0e7213298d85fb61fef6"
             ],
             "index": "pypi",
-            "version": "==5.3.4"
+            "version": "==5.3.5"
         },
         "pytest-dotenv": {
             "hashes": [
