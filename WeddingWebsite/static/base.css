@@ -21,11 +21,11 @@ body {
   color: #FFF;
 }
 
-.header .block{
+.header .block {
   position: center;
   width: max-content;
   text-align: center;
-  margin: auto auto;
+  margin: auto;
   padding: 10px;
   overflow-wrap: break-spaces;
 }
@@ -51,7 +51,7 @@ body {
 }
 
 /* Column container */
-.row {  
+.row {
   display: flex;
   flex-wrap: wrap;
   padding: 20px;
@@ -104,7 +104,7 @@ body {
 
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 700px) {
-  .row, .info-blab {   
+  .row, .info-blab {
     flex-direction: column-reverse;
   }
 }
