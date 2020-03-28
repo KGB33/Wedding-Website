@@ -1,6 +1,7 @@
 import pytest
 
 from WeddingWebsite.lfgs.models import LFG
+from WeddingWebsite.lfgs.exceptions import LFGIsFull
 
 
 @pytest.fixture
@@ -52,10 +53,11 @@ class TestFull:
         assert not lfg.full
 
     def test_more_than(self, lfg):
-        lfg.max_members = 2
-        with pytest.raises(ValueError) as excinfo:
-            lfg.full
-        assert f"LFG has more members than allowed!" == str(excinfo.value)
+        with pytest.raises(LFGIsFull) as excinfo:
+            lfg.max_members = 2
+        assert f"Cannot reduce total members to less than current memebers" == str(
+            excinfo.value
+        )
 
     def test_equal_to(self, lfg):
         lfg.max_members = 4

@@ -3,28 +3,40 @@ from typing import Literal
 
 from flask_pymongo import ObjectId
 
+from WeddingWebsite.lfgs.exceptions import LFGIsFull
+
 
 @dataclass
 class LFG:
     owner_id: str
     owner_name: str
     members: dict  # {member_id: member_contact_info}
-    max_members: int
+    _max_members: int
     info: str
     group_type: Literal["CARPOOL", "HOTEL"]
     _id: ObjectId = None
 
     def __post_init__(self):
-        self.full  # Checks if too many members were passed into init
+        if self.total_members > self.max_members:
+            raise ValueError(f"LFG has more members than allowed!")
+
+    @property
+    def max_members(self):
+        return self._max_members
+
+    @max_members.setter
+    def max_members(self, value):
+        if value < self.total_members:
+            raise LFGIsFull(
+                f"Cannot reduce total members to less than current memebers"
+            )
+        self._max_members = value
 
     @property
     def full(self):
         if self.total_members < self.max_members:
             return False
-        elif self.total_members == self.max_members:
-            return True
-        elif self.total_members > self.max_members:
-            raise ValueError(f"LFG has more members than allowed!")
+        return True
 
     @property
     def total_members(self):
@@ -47,12 +59,12 @@ class LFG:
         return True
 
     def add_member(self, member_id, member_name):
+        if self.full:
+            raise LFGIsFull(f"LFG Is Full, cannot add more members")
         self.members.update({member_id: member_name})
-        self.full
 
     def remove_member(self, member_id):
         del self.members[member_id]
-        self.full
 
 
 class LFGCollection:
