@@ -67,7 +67,7 @@ jobs:
     strategy:
       matrix:
         python-version: ["3.8"]
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest]
     env:
       FLASK_SECRET_KEY: "GITHUB_ACTIONS_KEY"
     steps:
