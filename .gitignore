@@ -17,3 +17,4 @@ app.yaml
 .venv
 .env
 app.py
+.tox

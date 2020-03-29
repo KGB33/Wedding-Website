@@ -472,8 +472,11 @@ version = "2.2.1"
 [package.extras]
 locale = ["Babel (>=1.3)"]
 
+[extras]
+test = []
+
 [metadata]
-content-hash = "a5f169dbebed4304daec3bd05aeae284a5d02a75499daf1913113ae029126a5b"
+content-hash = "81093a0ea50085f560a1b612b6666009466ea29b83ddd4072817fde38a7095ab"
 python-versions = "^3.8"
 
 [metadata.files]
