@@ -5,6 +5,8 @@ from flask import Flask
 from .extensions import login_manager, mongo
 from .config import TestingConfig
 
+__name__ = "weddingwebsite"
+
 
 def create_app(config=TestingConfig):
     """ Flask application factory """
