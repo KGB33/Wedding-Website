@@ -2,8 +2,8 @@ import os
 
 from flask import Flask
 
-from WeddingWebsite.extensions import login_manager, mongo
-from WeddingWebsite.config import TestingConfig
+from .extensions import login_manager, mongo
+from .config import TestingConfig
 
 
 def create_app(config=TestingConfig):
@@ -33,7 +33,7 @@ def create_app(config=TestingConfig):
 
     @login_manager.user_loader
     def load_user(user_id):
-        from WeddingWebsite.models import Guest
+        from weddingwebsite.models import Guest
         from flask_pymongo import ObjectId
 
         guest = mongo.db.guests.find_one({"_id": ObjectId(user_id)})
@@ -47,9 +47,9 @@ def create_app(config=TestingConfig):
 def register_blueprints(app):
     # Register Blueprints
     from . import views
-    from WeddingWebsite import admin
-    from WeddingWebsite import auth
-    from WeddingWebsite.lfgs import bp as lfgs_bp
+    from weddingwebsite import admin
+    from weddingwebsite import auth
+    from weddingwebsite.lfgs import bp as lfgs_bp
 
     app.register_blueprint(views.views)
     app.register_blueprint(auth.auth)

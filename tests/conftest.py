@@ -2,12 +2,12 @@ import pytest
 from unittest.mock import patch
 import werkzeug.security
 
-from WeddingWebsite import create_app
-from WeddingWebsite.auth.utils import requires_roles, roles_cannot_access
-from WeddingWebsite.config import TestingConfig
-import WeddingWebsite.models
+from weddingwebsite import create_app
+from weddingwebsite.auth.utils import requires_roles, roles_cannot_access
+from weddingwebsite.config import TestingConfig
+import weddingwebsite.models
 
-Guest = WeddingWebsite.models.Guest
+Guest = weddingwebsite.models.Guest
 
 
 @pytest.fixture
@@ -56,7 +56,7 @@ def mock_password_hash(monkeypatch, request):
         def mock_hash(*args, **kwargs):
             return "123456"
 
-        monkeypatch.setattr(WeddingWebsite.models, "generate_password_hash", mock_hash)
+        monkeypatch.setattr(weddingwebsite.models, "generate_password_hash", mock_hash)
 
 
 @pytest.fixture(autouse=True)
@@ -64,7 +64,7 @@ def mongo_db(request, test_client, mock_password_hash):
     if "no_mongo_db" in request.keywords:
         yield None
     else:
-        from WeddingWebsite.extensions import mongo
+        from weddingwebsite.extensions import mongo
 
         # Add Guests
         # Add Default boring Guest
@@ -128,7 +128,7 @@ def mock_hash(*args, **kwargs):
 
 def log_in(app, username="t_default", password="123456"):
 
-    with patch("WeddingWebsite.models.check_password_hash", return_value="123456"):
+    with patch("weddingwebsite.models.check_password_hash", return_value="123456"):
         response = app.post(
             "/auth/login",
             data={"username": username, "password": password},

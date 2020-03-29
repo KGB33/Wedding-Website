@@ -8,4 +8,4 @@ bp = Blueprint(
     static_folder="static",
 )
 
-from WeddingWebsite.lfgs import routes
+from . import routes

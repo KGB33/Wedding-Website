@@ -3,9 +3,9 @@ from flask_login import current_user, fresh_login_required, login_required
 from flask_pymongo import ObjectId
 
 
-from WeddingWebsite.extensions import mongo
-from WeddingWebsite.forms import RSVPForm
-from WeddingWebsite.models import GuestCollection
+from .extensions import mongo
+from .forms import RSVPForm
+from .models import GuestCollection
 
 
 views = Blueprint("views", __name__, url_prefix="")

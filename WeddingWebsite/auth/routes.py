@@ -8,12 +8,12 @@ from flask_login import (
 )
 from werkzeug.urls import url_parse
 
-from WeddingWebsite import login_manager
-from WeddingWebsite.auth.exceptions import NoRolesProvided
-from WeddingWebsite.extensions import mongo
-from WeddingWebsite.auth.forms import LoginForm, EditForm, RegistrationForm
-from WeddingWebsite.models import Guest
-from WeddingWebsite.auth import auth
+from weddingwebsite import login_manager
+from .exceptions import NoRolesProvided
+from weddingwebsite.extensions import mongo
+from .forms import LoginForm, EditForm, RegistrationForm
+from weddingwebsite.models import Guest
+from . import auth
 
 
 @auth.route("/refresh_login", methods=["GET", "POST"])

@@ -1,7 +1,7 @@
 import pytest
 
-from WeddingWebsite.lfgs.models import LFG
-from WeddingWebsite.lfgs.exceptions import LFGIsFull
+from weddingwebsite.lfgs.models import LFG
+from weddingwebsite.lfgs.exceptions import LFGIsFull
 
 
 @pytest.fixture

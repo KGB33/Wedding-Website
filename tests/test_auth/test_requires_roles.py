@@ -1,8 +1,8 @@
 import pytest
 
 from tests.conftest import log_in
-from WeddingWebsite.auth.utils import requires_roles
-from WeddingWebsite.auth.exceptions import NoRolesProvided
+from weddingwebsite.auth.utils import requires_roles
+from weddingwebsite.auth.exceptions import NoRolesProvided
 
 
 def test_requires_roles_with_valid_roles(template_user, test_client, mongo_db):

@@ -1,8 +1,8 @@
 import pytest
 
 from tests.conftest import log_in
-from WeddingWebsite.auth.utils import roles_cannot_access
-from WeddingWebsite.auth.exceptions import NoRolesProvided
+from weddingwebsite.auth.utils import roles_cannot_access
+from weddingwebsite.auth.exceptions import NoRolesProvided
 
 
 def test_roles_cannot_access_valid(template_user, test_client, mongo_db):

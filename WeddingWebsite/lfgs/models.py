@@ -3,7 +3,7 @@ from typing import Literal
 
 from flask_pymongo import ObjectId
 
-from WeddingWebsite.lfgs.exceptions import LFGIsFull
+from .exceptions import LFGIsFull
 
 
 @dataclass

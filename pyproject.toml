@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "WeddingWebsite"
+name = "weddingwebsite"
 version = "0.1.0"
 description = ""
 authors = ["kgb33 <github@bassingthwaite.org>"]

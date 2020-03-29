@@ -3,9 +3,9 @@ import os
 
 from mailjet_rest import Client as MJClient
 
-from WeddingWebsite.exceptions import NoContentProvided
-from WeddingWebsite.extensions import mongo
-from WeddingWebsite.models import GuestCollection
+from .exceptions import NoContentProvided
+from .extensions import mongo
+from .models import GuestCollection
 
 if not (MJ_KEY := os.getenv("MJ_KEY")):
     raise OSError("MJ_KEY not in .env")

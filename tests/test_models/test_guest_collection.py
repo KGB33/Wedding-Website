@@ -1,7 +1,7 @@
 import mongomock
 import pytest
 
-from WeddingWebsite.models import GuestCollection
+from weddingwebsite.models import GuestCollection
 
 
 @pytest.mark.no_mongo_db

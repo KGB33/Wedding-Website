@@ -8,4 +8,4 @@ admin = Blueprint(
     static_folder="static",
 )
 
-from WeddingWebsite.admin import routes
+from . import routes

@@ -8,4 +8,4 @@ auth = Blueprint(
     static_folder="static",
 )
 
-from WeddingWebsite.auth import routes
+from . import routes
