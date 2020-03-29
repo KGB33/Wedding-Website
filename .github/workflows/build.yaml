@@ -78,6 +78,8 @@ jobs:
       run: pip install tox
     - name: Install Poetry
       run: pip install poetry
+    - name: Build Package
+      run: poetry build
     - name: Cache Dependancies
       uses: actions/cache@v1.1.2
       with:
