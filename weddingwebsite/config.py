@@ -3,7 +3,14 @@ import os
 
 if not (FLASK_SECRET_KEY := os.getenv("FLASK_SECRET_KEY")):
     raise OSError("FLASK_SECRET_KEY not in .env")
-
+if not (DB_USER := os.getenv("DB_USER")):
+    raise OSError("DB_USER not in .env")
+if not (DB_PASSWORD := os.getenv("DB_PASSWORD")):
+    raise OSError("DB_PASSWORD not in .env")
+if not (DB_NAME := os.getenv("DB_NAME")):
+    raise OSError("DB_NAME not in .env")
+if not (DB_NAMESPACE := os.getenv("DB_NAMESPACE")):
+    raise OSError("DB_NAMESPACE not in .env")
 
 
 class BaseConfig:
@@ -21,9 +28,4 @@ class TestingConfig(BaseConfig):
 
 
 class ProductionConfig(BaseConfig):
-    DB_USER = os.getenv("DB_USER")
-    DB_PASSWORD = os.getenv("DB_PASSWORD")
-    DB_NAME = os.getenv("DB_NAME")
-    DB_NAMESPACE = os.getenv("DB_NAMESPACE")
     MONGO_URI = f"mongodb+srv://{DB_USER}:{DB_PASSWORD}@{DB_NAME}-pylxy.mongodb.net/{DB_NAMESPACE}?retryWrites=true&w=majority"
-    if "None" in MONGO_URI: raise EnvironmentError("Database info not in ENV")
