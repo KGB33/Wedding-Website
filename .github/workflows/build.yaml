@@ -62,7 +62,7 @@ jobs:
         branch: ${{ github.ref }}
 
   tests:
-    name: "Tests -- Python ${{ matrix.python-version }} Running On ${{ matrix.os }}"
+    name: "Tests: Py${{ matrix.python-version }} On ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -75,10 +75,10 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install tox
-      run: pip install tox
+      run: pip3 install tox
     - name: Install Poetry
       run: |
-        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
         source $HOME/.poetry/env
     - name: Cache Dependancies
       uses: actions/cache@v1.1.2
