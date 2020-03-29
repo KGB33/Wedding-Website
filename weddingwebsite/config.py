@@ -12,7 +12,6 @@ if not (DB_NAME := os.getenv("DB_NAME")):
 if not (DB_NAMESPACE := os.getenv("DB_NAMESPACE")):
     raise OSError("DB_NAMESPACE not in .env")
 
-
 class BaseConfig:
     SECRET_KEY = FLASK_SECRET_KEY
     USER_APP_NAME = "Wedding-Website"  # Shown in and email templates and page footers
