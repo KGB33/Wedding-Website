@@ -5,7 +5,6 @@ if not (FLASK_SECRET_KEY := os.getenv("FLASK_SECRET_KEY")):
     raise OSError("FLASK_SECRET_KEY not in .env")
 
 
-
 class BaseConfig:
     SECRET_KEY = FLASK_SECRET_KEY
     USER_APP_NAME = "Wedding-Website"  # Shown in and email templates and page footers
@@ -26,4 +25,5 @@ class ProductionConfig(BaseConfig):
     DB_NAME = os.getenv("DB_NAME")
     DB_NAMESPACE = os.getenv("DB_NAMESPACE")
     MONGO_URI = f"mongodb+srv://{DB_USER}:{DB_PASSWORD}@{DB_NAME}-pylxy.mongodb.net/{DB_NAMESPACE}?retryWrites=true&w=majority"
-    if "None" in MONGO_URI: raise EnvironmentError("Database info not in ENV")
+    if "None" in MONGO_URI:
+        raise EnvironmentError("Database info not in ENV")
