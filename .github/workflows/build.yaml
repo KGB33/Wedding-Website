@@ -77,9 +77,9 @@ jobs:
     - name: Install tox
       run: pip install tox
     - name: Install Poetry
-      run: curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-    - name: Build Package
-      run: poetry build
+      run: |
+        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+        source $HOME/.poetry/env
     - name: Cache Dependancies
       uses: actions/cache@v1.1.2
       with:
