@@ -18,3 +18,4 @@ app.yaml
 .env
 app.py
 .tox
+dist
