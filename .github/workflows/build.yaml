@@ -78,10 +78,6 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.1.0
-    - name: Configure MongoDB
-      run: |
-        mongo --port 27017
-        
     - name: Install tox
       run: pip install tox
     - name: Install Poetry
