@@ -88,6 +88,4 @@ jobs:
         restore-keys: ${{ runner.os }}-poetry-
     - name: "Run tox targets for ${{ matrix.python-version }}"
       run: |
-        ls -a
-        ls WeddingWebsite -a
         tox
