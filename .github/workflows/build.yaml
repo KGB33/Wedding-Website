@@ -70,8 +70,6 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
     - uses: actions/checkout@v2.0.0
-    - name: List Dirs
-      run: ls
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1.2.0
       with:
@@ -89,4 +87,7 @@ jobs:
         key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
         restore-keys: ${{ runner.os }}-poetry-
     - name: "Run tox targets for ${{ matrix.python-version }}"
-      run: tox
+      run: |
+        ls -a
+        ls WeddingWebsite -a
+        tox
