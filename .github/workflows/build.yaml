@@ -62,7 +62,7 @@ jobs:
         branch: ${{ github.ref }}
 
   tests:
-    name: "Tests -- Python ${{ matrix.python-version }} Running On ${{ matrix.os }}"
+    name: "Tests: Py${{ matrix.python-version }} On ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -70,21 +70,23 @@ jobs:
         os: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
     - uses: actions/checkout@v2.0.0
+    - name: List Dirs
+      run: ls
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1.2.0
       with:
         python-version: ${{ matrix.python-version }}
+    - name: Install tox
+      run: pip install tox
     - name: Install Poetry
-      run: pip install poetry
-    - name: Turn off Virtualenvs
-      run: poetry config virtualenvs.create false
+      run: |
+        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+        source $HOME/.poetry/env
     - name: Cache Dependancies
       uses: actions/cache@v1.1.2
       with:
         path: ~/.cache/pip
         key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
         restore-keys: ${{ runner.os }}-poetry-
-    - name: Install Dependancies
-      run: poetry install
     - name: "Run tox targets for ${{ matrix.python-version }}"
-      run: "python -m tox"
+      run: tox
