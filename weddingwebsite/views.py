@@ -13,13 +13,16 @@ views = Blueprint("views", __name__, url_prefix="")
 
 @views.route("/")
 def index():
+    # moved login page back due to COVID/Postponement
+    """
     if current_user.is_authenticated:
         return redirect(url_for("views.home"))
     return render_template("index.html")
+    """
+    return redirect(url_for("views.home"))
 
 
 @views.route("/home")
-@login_required
 def home():
     return render_template("home.html")
 

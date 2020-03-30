@@ -40,6 +40,15 @@ body {
 
 }
 
+.COVID-INFO {
+  width: auto;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  background-color: #ff0000;
+  font-size: 40px;
+}
+
 .nav_bar a:link, a:visited {
   color: #7CC0AC;
 }
