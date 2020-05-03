@@ -1,0 +1,96 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  Format:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.0.0
+    - name: Set up Python for black
+      uses: actions/setup-python@v1.2.0
+      with:
+        python-version: 3.8
+    - name: Install Black
+      run: pip install black
+    - name: Format With Black
+      run: |
+        black .
+    - name: Commit files
+      run: |
+        echo ${{ github.ref }}
+        git add .
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "ci: Auto-Formatted with Black" -a | exit 0
+        git pull
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
+
+  Generate-Requirements:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.0.0
+    - name: Set up Python for black
+      uses: actions/setup-python@v1.2.0
+      with:
+        python-version: 3.8
+    - name: Install Poetry
+      run: pip install poetry
+    - name: Generate Requirements.txt
+      run: |
+        poetry export -f requirements.txt > requirements.txt
+    - name: Commit files
+      run: |
+        echo ${{ github.ref }}
+        git add .
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "ci: Automated build updated Requirements" -a | exit 0
+        git pull
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
+
+  tests:
+    name: "Tests: Py${{ matrix.python-version }} On ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: ["3.8"]
+        os: [ubuntu-latest]
+    env:
+      FLASK_SECRET_KEY: "GITHUB_ACTIONS_KEY"
+    steps:
+    - uses: actions/checkout@v2.0.0
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1.2.0
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.1.0
+    - name: Install tox
+      run: pip install tox
+    - name: Install Poetry
+      run: |
+        pip install poetry
+        # curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+        # source $HOME/.poetry/env
+    - name: Cache Dependancies
+      uses: actions/cache@v1.1.2
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+        restore-keys: ${{ runner.os }}-poetry-
+    - name: "Run tox targets for ${{ matrix.python-version }}"
+      run: |
+        tox

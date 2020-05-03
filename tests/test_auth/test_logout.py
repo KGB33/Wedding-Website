@@ -10,7 +10,7 @@ def test_logout_auth_user(test_client):
     log_in(test_client)
     response = test_client.get("auth/logout", follow_redirects=True)
     assert response.status_code == 200
-    assert b"<!-- index.html -->" in response.data
+    # assert b"<!-- index.html -->" in response.data # Removed -- COVID
     assert b"You have been logged out." in response.data
 
 
@@ -22,5 +22,5 @@ def test_logout_anon_user(test_client):
     """
     response = test_client.get("auth/logout", follow_redirects=True)
     assert response.status_code == 200
-    assert b"<!-- index.html -->" in response.data
+    # assert b"<!-- index.html -->" in response.data # Removed -- COVID
     assert b"You were not, and still are not, logged in." in response.data

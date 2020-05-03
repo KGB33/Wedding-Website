@@ -17,7 +17,7 @@ from wtforms.validators import (
     ValidationError,
 )
 
-from WeddingWebsite import mongo
+from . import mongo
 
 
 class MultiCheckboxField(SelectMultipleField):

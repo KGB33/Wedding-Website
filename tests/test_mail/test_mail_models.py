@@ -2,8 +2,8 @@ from dataclasses import asdict
 
 import pytest
 
-from WeddingWebsite.exceptions import NoContentProvided
-from WeddingWebsite.mail import Message, Recipient
+from weddingwebsite.exceptions import NoContentProvided
+from weddingwebsite.mail import Message, Recipient
 
 
 @pytest.mark.no_mongo_db

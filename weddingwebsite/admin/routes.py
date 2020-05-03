@@ -1,17 +1,17 @@
 from flask import flash, redirect, render_template, url_for
 
-from WeddingWebsite.auth.utils import requires_roles
-from WeddingWebsite.extensions import mongo
-from WeddingWebsite.forms import ConfirmActionForm, SendMailForm
-from WeddingWebsite.auth.forms import EditForm
-from WeddingWebsite.mail import (
+from weddingwebsite.auth.utils import requires_roles
+from weddingwebsite.extensions import mongo
+from weddingwebsite.forms import ConfirmActionForm, SendMailForm
+from weddingwebsite.auth.forms import EditForm
+from weddingwebsite.mail import (
     build_custom_email,
     build_rsvp_email,
     get_recipients,
     send_mail_jet,
 )
-from WeddingWebsite.models import GuestCollection
-from WeddingWebsite.admin import admin
+from weddingwebsite.models import GuestCollection
+from . import admin
 
 
 @admin.route("/")

@@ -3,9 +3,9 @@ from flask_login import current_user, fresh_login_required, login_required
 from flask_pymongo import ObjectId
 
 
-from WeddingWebsite.extensions import mongo
-from WeddingWebsite.forms import RSVPForm
-from WeddingWebsite.models import GuestCollection
+from .extensions import mongo
+from .forms import RSVPForm
+from .models import GuestCollection
 
 
 views = Blueprint("views", __name__, url_prefix="")
@@ -13,13 +13,16 @@ views = Blueprint("views", __name__, url_prefix="")
 
 @views.route("/")
 def index():
+    # moved login page back due to COVID/Postponement
+    """
     if current_user.is_authenticated:
         return redirect(url_for("views.home"))
     return render_template("index.html")
+    """
+    return redirect(url_for("views.home"))
 
 
 @views.route("/home")
-@login_required
 def home():
     return render_template("home.html")
 

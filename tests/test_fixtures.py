@@ -1,4 +1,4 @@
-from WeddingWebsite.models import Guest
+from weddingwebsite.models import Guest
 import pytest
 import werkzeug
 

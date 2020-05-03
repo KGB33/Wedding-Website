@@ -1,5 +1,5 @@
-from WeddingWebsite.mail import build_rsvp_email, get_recipients, Message, Recipient
-from WeddingWebsite.models import GuestCollection
+from weddingwebsite.mail import build_rsvp_email, get_recipients, Message, Recipient
+from weddingwebsite.models import GuestCollection
 
 
 class TestSendMail:

@@ -2,15 +2,15 @@ from flask_login import login_required, current_user
 from flask import render_template, url_for, redirect
 from flask_pymongo import ObjectId
 
-from WeddingWebsite.lfgs import bp
-from WeddingWebsite.lfgs.models import LFG, LFGCollection
-from WeddingWebsite.lfgs.forms import (
+from . import bp
+from .models import LFG, LFGCollection
+from .forms import (
     CreateLFGForm,
     EditLFGForm,
     ContactInfoForm,
     ConfirmActionForm,
 )
-from WeddingWebsite.extensions import mongo
+from weddingwebsite.extensions import mongo
 
 
 @bp.route("/")

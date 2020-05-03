@@ -1,5 +1,5 @@
-from WeddingWebsite import create_app
-from WeddingWebsite.config import ProductionConfig
+from weddingwebsite import create_app
+from weddingwebsite.config import ProductionConfig
 
 app = create_app(ProductionConfig)
 

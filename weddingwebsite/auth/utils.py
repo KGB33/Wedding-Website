@@ -3,8 +3,8 @@ from functools import wraps
 from flask_login import current_user
 from flask import redirect, url_for
 
-from WeddingWebsite import login_manager
-from WeddingWebsite.auth.exceptions import NoRolesProvided
+from weddingwebsite import login_manager
+from .exceptions import NoRolesProvided
 
 
 def requires_roles(*roles):
