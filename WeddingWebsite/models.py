@@ -1,5 +1,6 @@
 import random
 from dataclasses import asdict, dataclass, field
+from typing import Literal
 
 from flask_login import UserMixin
 from flask_pymongo import ObjectId

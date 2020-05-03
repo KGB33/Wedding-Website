@@ -1,4 +1,20 @@
-from WeddingWebsite.secrets import DB_HOST, FLASK_SECRET_KEY
+import os
+
+
+if not (DB_USER := os.getenv("DB_USER")):
+    raise OSError("DB_USER not in .env")
+
+if not (DB_PASSWORD := os.getenv("DB_PASSWORD")):
+    raise OSError("DB_PASSWORD not in .env")
+
+if not (DB_NAME := os.getenv("DB_NAME")):
+    raise OSError("DB_NAME not in .env")
+
+if not (DB_NAMESPACE := os.getenv("DB_NAMESPACE")):
+    raise OSError("DB_NAMESPACE not in .env")
+
+if not (FLASK_SECRET_KEY := os.getenv("FLASK_SECRET_KEY")):
+    raise OSError("FLASK_SECRET_KEY not in .env")
 
 
 class BaseConfig:
@@ -15,5 +31,5 @@ class TestingConfig(BaseConfig):
     MONGO_URI = "mongodb://127.0.0.1:27017/test"
 
 
-class DevelopmentConfig(BaseConfig):
-    MONGO_URI = DB_HOST
+class ProductionConfig(BaseConfig):
+    MONGO_URI = f"mongodb+srv://{DB_USER}:{DB_PASSWORD}@{DB_NAME}-pylxy.mongodb.net/{DB_NAMESPACE}?retryWrites=true&w=majority"

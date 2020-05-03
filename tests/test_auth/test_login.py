@@ -1,4 +1,5 @@
 from tests.conftest import log_in
+from unittest.mock import patch
 
 
 def test_valid_login(test_client):
@@ -7,14 +8,15 @@ def test_valid_login(test_client):
     WHEN the '/login' page is posted (w/ valid data)
     THEN check if the response is valid
     """
-    response = test_client.post(
-        "/auth/login",
-        data={"username": "t_default", "password": "123456"},
-        follow_redirects=True,
-    )
+    with patch("WeddingWebsite.models.check_password_hash", return_value="123456"):
+        response = test_client.post(
+            "/auth/login",
+            data={"username": "t_default", "password": "123456"},
+            follow_redirects=True,
+        )
     assert response.status_code == 200
-    assert b"Logged in t_default successfully" in response.data
     assert b"<!-- Home.html -->" in response.data
+    assert b"Logged in t_default successfully" in response.data
     assert b'<link href="static/base.css"' in response.data
 
 

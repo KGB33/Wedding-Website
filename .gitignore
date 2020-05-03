@@ -1,7 +1,6 @@
 .idea
 secrets.py
 
-
 .pytest_cache
 /instance/
 
@@ -12,6 +11,8 @@ settings.json
 .gcloudignore
 
 WeddingWebsite.egg-info
+
+app.yaml
 
 .venv
 .env

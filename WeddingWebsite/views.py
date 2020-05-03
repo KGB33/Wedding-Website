@@ -1,8 +1,10 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, fresh_login_required, login_required
+from flask_pymongo import ObjectId
+
 
 from WeddingWebsite.extensions import mongo
-from WeddingWebsite.forms import EditForm, RSVPForm
+from WeddingWebsite.forms import RSVPForm
 from WeddingWebsite.models import GuestCollection
 
 
@@ -70,31 +72,3 @@ def photos():
 @login_required
 def details():
     return render_template("details.html", guest=current_user)
-
-
-@views.route("/view_profile")
-@login_required
-def view_profile():
-    """
-    Route for viewing profile info
-    """
-    return render_template("guest.html", guest=current_user)
-
-
-@views.route("/edit_profile", methods=["GET", "POST"])
-@fresh_login_required
-def edit_profile():
-    form = EditForm()
-    guest = current_user
-    if form.validate_on_submit():
-        if form.username.data:
-            guest.username = form.username.data
-        if form.password.data:
-            guest.password = form.password.data
-        if form.name.data:
-            guest.name = form.name.data
-        if form.email.data:
-            guest.email = form.email.data
-        guest.update_collection(mongo.db.guests)
-        return redirect(url_for("views.view_profile"))
-    return render_template("guest_edit.html", guest=current_user, form=form)

@@ -3,10 +3,10 @@ import os
 from flask import Flask
 
 from WeddingWebsite.extensions import login_manager, mongo
-from WeddingWebsite.secrets import DB_HOST, DB_NAME, FLASK_SECRET_KEY
+from WeddingWebsite.config import TestingConfig
 
 
-def create_app(config):
+def create_app(config=TestingConfig):
     """ Flask application factory """
 
     # Setup Flask and load app.config
@@ -49,7 +49,9 @@ def register_blueprints(app):
     from . import views
     from WeddingWebsite import admin
     from WeddingWebsite import auth
+    from WeddingWebsite.lfgs import bp as lfgs_bp
 
     app.register_blueprint(views.views)
     app.register_blueprint(auth.auth)
     app.register_blueprint(admin.admin)
+    app.register_blueprint(lfgs_bp)

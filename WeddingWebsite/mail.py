@@ -1,12 +1,17 @@
 from dataclasses import asdict, dataclass
+import os
 
 from mailjet_rest import Client as MJClient
 
 from WeddingWebsite.exceptions import NoContentProvided
 from WeddingWebsite.extensions import mongo
 from WeddingWebsite.models import GuestCollection
-from WeddingWebsite.secrets import MJ_KEY, MJ_PASSWORD
 
+if not (MJ_KEY := os.getenv("MJ_KEY")):
+    raise OSError("MJ_KEY not in .env")
+
+if not (MJ_PASSWORD := os.getenv("MJ_PASSWORD")):
+    raise OSError("MJ_PASSWORD not in .env")
 
 mail_jet = MJClient(auth=(MJ_KEY, MJ_PASSWORD), version="v3.1")
 
@@ -87,7 +92,7 @@ class Message:
                     "Subject": self.subject,
                     "TextPart": self.text_part,
                     "HtmlPart": self.html_part,
-                    "To": [asdict(r) for r in self.recipients],
+                    "Bcc": [asdict(r) for r in self.recipients],
                 }
             ]
         }
